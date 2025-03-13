@@ -1,10 +1,17 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import AppLayout from '@/layouts/AppLayout'
+import DashboardPage from '@/pages/DashboardPage'
 
 function App() {
 
   return (
-    <>
-      <h1>UpTask</h1>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<AppLayout />} >
+          <Route path='/' index element={<DashboardPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
