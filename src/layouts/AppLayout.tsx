@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom"
 import Logo from "../components/Logo"
 import MenuHamburguer from "@/components/MenuHamburguer"
+import { ToastContainer } from "react-toastify"
 
 const AppLayout = () => {
   return (
@@ -17,6 +18,11 @@ const AppLayout = () => {
         <Outlet />
       </main>
 
+      <ToastContainer
+        autoClose={2000}
+        pauseOnHover={false}
+        pauseOnFocusLoss={false}
+      />
     </>
   )
 }
