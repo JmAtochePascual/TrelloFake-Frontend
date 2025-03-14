@@ -1,6 +1,13 @@
-import api from "@/config/axios";
-import { projectsSchema, TApiResponseMessage, TCreateProject, TProjects } from "@/types/projectType";
 import { isAxiosError } from "axios";
+import api from "@/config/axios";
+import {
+  projectSchema,
+  projectsSchema,
+  TApiResponseMessage,
+  TCreateProject,
+  TProject,
+  TProjects
+} from "@/types/projectType";
 
 
 // Create a project
@@ -31,5 +38,34 @@ export const getProjects = async () => {
     }
 
     throw new Error('Error al intentar obtener los proyectos');
+  }
+};
+
+// Get a project by ID
+export const getProject = async (id: TProject['_id']) => {
+  try {
+    const { data } = await api.get<TProject>(`/projects/${id}`);
+    const response = projectSchema.safeParse(data);
+    if (response.success) return response.data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar obtener el proyecto');
+  }
+};
+
+// Update project
+export const updateProject = async ({ projectId, formData }: { projectId: TProject['_id'], formData: TCreateProject }) => {
+  try {
+    const { data } = await api.put<TApiResponseMessage>(`/projects/${projectId}`, formData);
+    return data.message;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar actualizar el proyecto');
   }
 };

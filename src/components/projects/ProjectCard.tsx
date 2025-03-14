@@ -12,17 +12,17 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
       <div>
         <div className="flex flex-col gap-2">
           <Link
-            to={`/projects/${project._id}`}
+            to={``}
             className="text-gray-600 cursor-pointer hover:underline text-3xl font-bold">
             {project.projectName}
           </Link>
 
-          <p className="text-sm text-gray-400">
-            Cliente: {project.clientName}
+          <p className="text-sm text-gray-600">
+            <span className="text-gray-600 font-bold">Cliente:</span> {project.clientName}
           </p>
 
-          <p className="text-sm text-gray-400">
-            {project.description}
+          <p className="text-sm text-gray-600">
+            <span className="text-gray-600 font-bold">Descripción:</span> {project.description}
           </p>
         </div>
       </div>
@@ -38,10 +38,10 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         <MenuItems
           transition
           anchor="bottom end"
-          className="w-52 mt-2 flex flex-col origin-top-right rounded-xl borde bg-white px-2 text-sm/6 transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 shadow-2xl">
+          className="w-52 mt-2 flex flex-col origin-top-right rounded-xl border bg-white px-2 text-sm/6 transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 shadow-2xl">
           <MenuItem>
             <Link
-              to={`/projects/${project._id}`}
+              to={``}
               className="w-full text-start text-gray-700 rounded-lg py-1.5 px-3 hover:text-black">
               Ver Proyecto
             </Link>
@@ -49,7 +49,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
           <MenuItem>
             <Link
-              to={``}
+              to={`/projects/${project._id}/edit`}
               className="w-full text-start text-gray-700 rounded-lg py-1.5 px-3 hover:text-black">
               Editar Proyecto
             </Link>

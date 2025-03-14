@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { projectShema, TCreateProject } from "@/types/projectType"
+import { projectCreateShema, TCreateProject } from "@/types/projectType"
 import CrearProjectForm from "@/components/projects/CrearProjectForm"
 import { useMutation } from "@tanstack/react-query"
 import { createProject } from "@/services/projectService"
@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom"
 const CreateProjectPage = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm<TCreateProject>({
-    resolver: zodResolver(projectShema),
+    resolver: zodResolver(projectCreateShema),
   });
 
   // Mutate to create a project

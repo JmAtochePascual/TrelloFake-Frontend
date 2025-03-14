@@ -5,6 +5,8 @@ import { useQuery } from "@tanstack/react-query"
 import { Link, Navigate } from "react-router-dom"
 
 const DashboardPage = () => {
+
+  // Query to get the projects
   const { data, isLoading, isError } = useQuery({
     queryKey: ['projects'],
     queryFn: getProjects,
