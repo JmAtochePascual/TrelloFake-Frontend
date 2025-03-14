@@ -5,12 +5,12 @@ import { EllipsisVerticalIcon } from "@heroicons/react/16/solid"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
+
 type ProjectCardProps = {
   project: TProject
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
-  // const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   // Mutate to delete the project
@@ -24,7 +24,6 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
     onSuccess: (message) => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
       toast.success(message);
-      // navigate('/');
     },
   })
 
@@ -35,7 +34,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
       <div>
         <div className="flex flex-col gap-2">
           <Link
-            to={``}
+            to={`/projects/${project._id}`}
             className="text-gray-600 cursor-pointer hover:underline text-3xl font-bold">
             {project.projectName}
           </Link>
@@ -64,7 +63,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           className="w-52 mt-2 flex flex-col origin-top-right rounded-xl border bg-white px-2 text-sm/6 transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 shadow-2xl">
           <MenuItem>
             <Link
-              to={``}
+              to={`/projects/${project._id}`}
               className="w-full text-start text-gray-700 rounded-lg py-1.5 px-3 hover:text-black">
               Ver Proyecto
             </Link>

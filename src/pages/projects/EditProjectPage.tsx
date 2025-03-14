@@ -11,9 +11,9 @@ const EditProjectPage = () => {
   const params = useParams();
   const projectId = params.projectId!;
   const navigate = useNavigate();
-
-  // Query to get the project with the given id
   const queryClient = useQueryClient();
+
+  // Query to get the project bu ID
   const { data, isLoading, isError } = useQuery({
     queryKey: ['project', projectId],
     queryFn: () => getProject(projectId),
