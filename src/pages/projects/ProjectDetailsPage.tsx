@@ -1,3 +1,4 @@
+import EditTaskModal from "@/components/task/EditTaskModal";
 import TaskList from "@/components/task/TaskList";
 import TaskModal from "@/components/task/TaskModal";
 import { getProject } from "@/services/projectService";
@@ -35,6 +36,8 @@ const ProjectDetailsPage = () => {
         tasks={data.tasks} />
 
       <TaskModal />
+
+      <EditTaskModal />
     </>
 
   )

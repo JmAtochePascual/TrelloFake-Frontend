@@ -1,13 +1,15 @@
 import { TProjectTask } from "@/types/projectType"
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 type TaskCardProps = {
   task: TProjectTask
 }
 
 const TaskCard = ({ task }: TaskCardProps) => {
+  const navigate = useNavigate();
+
   return (
     <li className="p-4 flex justify-between items-start gap-3 border border-slate-200 bg-white">
 
@@ -42,11 +44,11 @@ const TaskCard = ({ task }: TaskCardProps) => {
           </MenuItem>
 
           <MenuItem>
-            <Link
-              to={''}
+            <button
+              onClick={() => navigate('?editTask=' + task._id)}
               className="w-full text-start text-gray-700 rounded-lg py-1.5 px-3 hover:text-black">
               Editar Tarea
-            </Link>
+            </button>
           </MenuItem>
 
           <MenuItem>
