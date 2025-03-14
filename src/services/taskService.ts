@@ -51,3 +51,17 @@ export const updateTask = async ({ projectId, taskId, formData }: Pick<TaskServi
     throw new Error('Error al intentar actualizar la tarea');
   }
 }
+
+// Delete a task
+export const deleteTask = async ({ projectId, taskId }: Pick<TaskService, 'projectId' | 'taskId'>) => {
+  try {
+    const { data } = await api.delete<TApiResponseMessage>(`/projects/${projectId}/tasks/${taskId}`);
+    return data.message;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar eliminar la tarea');
+  }
+}

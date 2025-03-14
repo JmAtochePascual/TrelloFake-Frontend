@@ -32,8 +32,8 @@ const ProjectDetailsPage = () => {
         Crear Tarea
       </button>
 
-      <TaskList
-        tasks={data.tasks} />
+
+      <TaskList tasks={data.tasks} />
 
       <TaskModal />
 
