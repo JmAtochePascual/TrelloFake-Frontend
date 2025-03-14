@@ -1,3 +1,4 @@
+import TaskList from "@/components/task/TaskList";
 import TaskModal from "@/components/task/TaskModal";
 import { getProject } from "@/services/projectService";
 import { useQuery } from "@tanstack/react-query";
@@ -29,6 +30,9 @@ const ProjectDetailsPage = () => {
         className="mb-12 px-4 py-2 text-white bg-primary hover:bg-secondary">
         Crear Tarea
       </button>
+
+      <TaskList
+        tasks={data.tasks} />
 
       <TaskModal />
     </>

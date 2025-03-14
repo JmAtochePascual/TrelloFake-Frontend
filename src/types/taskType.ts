@@ -22,6 +22,7 @@ export const taskSchema = z.object({
   __v: z.number()
 });
 
+export const tasksSchema = z.array(taskSchema);
 
 export const taskCreateSchema = taskSchema.pick({
   name: true,
@@ -29,5 +30,7 @@ export const taskCreateSchema = taskSchema.pick({
 });
 
 export type TTask = z.infer<typeof taskSchema>;
+
+export type TTasks = z.infer<typeof tasksSchema>;
 
 export type TCreateTask = z.infer<typeof taskCreateSchema>;

@@ -2,7 +2,7 @@ import { taskCreateSchema, TCreateTask } from '@/types/taskType';
 import ErrorMessage from '../ErrorMessage'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createTask } from '@/services/taskService';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -11,6 +11,7 @@ const CreateTaskForm = () => {
   const navigate = useNavigate();
   const params = useParams();
   const projectId = params.projectId!;
+  const queryClient = useQueryClient();
 
   const { register, handleSubmit, formState: { errors } } = useForm<TCreateTask>({
     resolver: zodResolver(taskCreateSchema)
@@ -25,6 +26,7 @@ const CreateTaskForm = () => {
       };
     },
     onSuccess: (message) => {
+      queryClient.invalidateQueries({ queryKey: ['project', projectId] });
       toast.success(message);
       navigate(location.pathname, { replace: true });
     },
