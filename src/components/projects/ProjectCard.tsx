@@ -1,12 +1,35 @@
+import { deleteProject } from "@/services/projectService"
 import { TProject } from "@/types/projectType"
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Link } from "react-router-dom"
+import { toast } from "react-toastify"
 type ProjectCardProps = {
   project: TProject
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
+  // const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  // Mutate to delete the project
+  const { mutate } = useMutation({
+    mutationFn: deleteProject,
+    onError: (error) => {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    },
+    onSuccess: (message) => {
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
+      toast.success(message);
+      // navigate('/');
+    },
+  })
+
+  const handleDelete = () => mutate(project._id);
+
   return (
     <li className="flex justify-between items-start px-4 py-8">
       <div>
@@ -58,6 +81,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           <MenuItem>
             <button
               type="button"
+              onClick={handleDelete}
               className="w-full text-start text-red-500 rounded-lg py-1.5 px-3 hover:text-red-700">
               Eliminar Proyecto
             </button>

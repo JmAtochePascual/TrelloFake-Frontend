@@ -9,9 +9,13 @@ import {
   TProjects
 } from "@/types/projectType";
 
+type TProjectService = {
+  projectId: TProject['_id'];
+  formData: TCreateProject;
+}
 
 // Create a project
-export const createProject = async (formData: TCreateProject) => {
+export const createProject = async (formData: TProjectService['formData']) => {
   try {
     const { data } = await api.post<TApiResponseMessage>('/projects', formData);
     return data.message;
@@ -42,9 +46,9 @@ export const getProjects = async () => {
 };
 
 // Get a project by ID
-export const getProject = async (id: TProject['_id']) => {
+export const getProject = async (projectId: TProjectService['projectId']) => {
   try {
-    const { data } = await api.get<TProject>(`/projects/${id}`);
+    const { data } = await api.get<TProject>(`/projects/${projectId}`);
     const response = projectSchema.safeParse(data);
     if (response.success) return response.data;
   } catch (error) {
@@ -57,7 +61,7 @@ export const getProject = async (id: TProject['_id']) => {
 };
 
 // Update project
-export const updateProject = async ({ projectId, formData }: { projectId: TProject['_id'], formData: TCreateProject }) => {
+export const updateProject = async ({ projectId, formData }: TProjectService) => {
   try {
     const { data } = await api.put<TApiResponseMessage>(`/projects/${projectId}`, formData);
     return data.message;
@@ -67,5 +71,19 @@ export const updateProject = async ({ projectId, formData }: { projectId: TProje
     }
 
     throw new Error('Error al intentar actualizar el proyecto');
+  }
+};
+
+// Delete project
+export const deleteProject = async (projectId: TProjectService['projectId']) => {
+  try {
+    const { data } = await api.delete<TApiResponseMessage>(`/projects/${projectId}`);
+    return data.message;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar eliminar el proyecto');
   }
 };
