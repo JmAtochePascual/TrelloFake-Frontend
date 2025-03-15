@@ -5,6 +5,7 @@ import CreateProjectPage from '@/pages/projects/CreateProjectPage'
 import EditProjectPage from '@/pages/projects/EditProjectPage'
 import ProjectDetailsPage from '@/pages/projects/ProjectDetailsPage'
 import LoginPage from '@/pages/auth/LoginPage'
+import RegisterPage from './pages/auth/RegisterPage'
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
     <BrowserRouter>
       <Routes>
 
+        <Route path='/auth/register' element={<RegisterPage />} />
         <Route path='/auth/login' element={<LoginPage />} />
 
         <Route element={<AppLayout />} >

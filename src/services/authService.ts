@@ -1,5 +1,5 @@
 import api from "@/config/axios";
-import { TLogin } from "@/types/authType";
+import { TLogin, TRegister } from "@/types/authType";
 import { TApiResponseMessage } from "@/types/projectType";
 import { isAxiosError } from "axios";
 
@@ -14,5 +14,21 @@ export const login = async (formData: TLogin) => {
     }
 
     throw new Error('Error al intentar iniciar sesión');
+  }
+};
+
+
+// Register user
+export const registerUser = async (formData: TRegister) => {
+  try {
+    const { data } = await api.post<TApiResponseMessage>('/auth/create', formData);
+    console.log(data.message);
+    return data.message;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar registrar');
   }
 };

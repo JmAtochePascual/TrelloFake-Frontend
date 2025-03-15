@@ -1,7 +1,6 @@
 import { FieldErrors, UseFormRegister } from 'react-hook-form'
 import ErrorMessage from '../ErrorMessage'
 import { TLogin } from '@/types/authType'
-import { ToastContainer } from 'react-toastify'
 
 type AuthLoginFormProps = {
   register: UseFormRegister<TLogin>
@@ -44,10 +43,6 @@ const AuthLoginForm = ({ register, errors }: AuthLoginFormProps) => {
 
         {errors.password && <ErrorMessage message={errors.password.message} />}
       </div>
-
-      <ToastContainer
-        autoClose={2000}
-      />
     </>
   )
 }

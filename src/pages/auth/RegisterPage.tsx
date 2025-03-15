@@ -1,33 +1,34 @@
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { loginSchema, TLogin } from "@/types/authType"
 import AuthTitle from "@/components/auth/AuthTitle"
-import AuthLoginForm from "@/components/auth/AuthLoginForm"
-import { Link, useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import { registerSchema, TRegister } from "@/types/authType"
+import { Link } from "react-router-dom"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation } from "@tanstack/react-query"
-import { login } from "@/services/authService"
 import { toast, ToastContainer } from "react-toastify"
+import { registerUser } from "@/services/authService"
+import AuthRegisterForm from "@/components/auth/AuthRegisterForm"
 
-const LoginPage = () => {
-  const navigate = useNavigate();
-  const { register, formState: { errors }, handleSubmit } = useForm<TLogin>({
-    resolver: zodResolver(loginSchema)
+const RegisterPage = () => {
+
+  const { register, formState: { errors }, handleSubmit, reset } = useForm<TRegister>({
+    resolver: zodResolver(registerSchema)
   });
 
-  // Mutate to login
+  // Mutate to register
   const { mutate } = useMutation({
-    mutationFn: login,
+    mutationFn: registerUser,
     onError: (error) => {
       if (error instanceof Error) {
         toast.error(error.message);
       }
     },
-    onSuccess: () => {
-      navigate('/');
+    onSuccess: (message) => {
+      reset();
+      toast.success(message);
     },
   });
 
-  const onSubmit = handleSubmit((formData: TLogin) => mutate(formData));
+  const onSubmit = handleSubmit((formData: TRegister) => mutate(formData));
 
   return (
     <>
@@ -44,21 +45,21 @@ const LoginPage = () => {
             noValidate
             className="w-full max-w-[400px] mx-auto flex flex-col gap-4 rounded-md">
 
-            <AuthLoginForm
+            <AuthRegisterForm
               register={register}
               errors={errors} />
 
             <input
               type="submit"
-              value="Iniciar Sesión"
+              value="Crear Cuenta"
               className="w-full p-3 font-bold rounded-full shadow-lg bg-primary text-white cursor-pointer hover:bg-secondary" />
           </form>
 
           <div className="max-w-[500px] mx-auto flex flex-col gap-8 text-center text-gray-600">
             <Link
-              to="/auth/register"
+              to="/auth/login"
               className="text-gray-600 hover:underline">
-              No tienes una cuenta? <span className="font-bold text-primary">Registrate</span>
+              Ya tienes una cuenta? <span className="font-bold text-primary">Inicia Sesión</span>
             </Link>
 
             <p>
@@ -67,7 +68,7 @@ const LoginPage = () => {
           </div>
         </div>
 
-        <div className="hidden bg-login bg-cover bg-center w-full h-full md:block"></div>
+        <div className="hidden bg-register bg-cover bg-center w-full h-full md:block"></div>
       </div>
 
       <ToastContainer
@@ -77,4 +78,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default RegisterPage
