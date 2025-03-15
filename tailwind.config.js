@@ -10,6 +10,9 @@ export default {
         primary: "#6A4EE9",
         secondary: "#5739dd",
       },
+      backgroundImage: {
+        login: "url('/bg-login.png')",
+      },
     },
   },
   plugins: [],

@@ -4,12 +4,16 @@ import DashboardPage from '@/pages/DashboardPage'
 import CreateProjectPage from '@/pages/projects/CreateProjectPage'
 import EditProjectPage from '@/pages/projects/EditProjectPage'
 import ProjectDetailsPage from '@/pages/projects/ProjectDetailsPage'
+import LoginPage from '@/pages/auth/LoginPage'
 
 function App() {
 
   return (
     <BrowserRouter>
       <Routes>
+
+        <Route path='/auth/login' element={<LoginPage />} />
+
         <Route element={<AppLayout />} >
           <Route path='/' index element={<DashboardPage />} />
           <Route path='/projects/create' element={<CreateProjectPage />} />
