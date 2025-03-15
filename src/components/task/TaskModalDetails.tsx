@@ -1,15 +1,18 @@
 import { statusTranslations } from "@/locales/es";
-import { getTask } from "@/services/taskService";
+import { getTask, updateTaskStatus } from "@/services/taskService";
 import { formatDate } from "@/utils/formatDate";
 import { Description, Dialog, DialogPanel, DialogTitle } from "@headlessui/react"
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ChangeEvent } from "react";
+import { TTask } from "@/types/taskType";
 
 const TaskModalDetails = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const params = useParams();
+  const queryClient = useQueryClient();
 
   const projectId = params.projectId!;
   const queryParams = new URLSearchParams(location.search);
@@ -23,6 +26,27 @@ const TaskModalDetails = () => {
     retry: false,
     enabled: !!taskId
   });
+
+  // Mutation to update task status
+  const { mutate } = useMutation({
+    mutationFn: updateTaskStatus,
+    onError: (error) => {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      };
+    },
+    onSuccess: (message) => {
+      queryClient.invalidateQueries({ queryKey: ['task', taskId] });
+      queryClient.invalidateQueries({ queryKey: ['project', projectId] });
+      navigate(location.pathname, { replace: true });
+      toast.success(message);
+    },
+  });
+
+  const handleChangeStatus = (event: ChangeEvent<HTMLSelectElement>) => {
+    const status = event.target.value as TTask['status'];
+    mutate({ projectId, taskId, status });
+  };
 
   if (isLoading) return <p>Cargando...</p>;
   if (isError) {
@@ -57,7 +81,7 @@ const TaskModalDetails = () => {
               Descripción: <span className="font-light">{data.description}</span>
             </Description>
 
-            <form
+            <div
               className='my-5 space-y-3'>
               <label
                 htmlFor="status"
@@ -66,6 +90,7 @@ const TaskModalDetails = () => {
               </label>
 
               <select
+                onChange={handleChangeStatus}
                 name="status"
                 id="status"
                 defaultValue={data.status}
@@ -80,8 +105,7 @@ const TaskModalDetails = () => {
                   )
                 }
               </select>
-            </form>
-
+            </div>
           </DialogPanel>
         </div>
       </Dialog>

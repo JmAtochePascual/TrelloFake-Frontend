@@ -56,7 +56,7 @@ export const updateTask = async ({ projectId, taskId, formData }: Pick<TaskServi
 // Update status
 export const updateTaskStatus = async ({ projectId, taskId, status }: Pick<TaskService, 'projectId' | 'taskId' | 'status'>) => {
   try {
-    const { data } = await api.put<TApiResponseMessage>(`/projects/${projectId}/tasks/${taskId}`, status);
+    const { data } = await api.post<TApiResponseMessage>(`/projects/${projectId}/tasks/${taskId}/status`, { status });
     return data.message;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
