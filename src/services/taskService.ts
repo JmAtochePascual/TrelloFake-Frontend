@@ -7,6 +7,7 @@ type TaskService = {
   projectId: TProject['_id'],
   taskId: TTask['_id']
   formData: TCreateTask,
+  status: TTask['status']
 }
 
 // Create a task
@@ -49,6 +50,20 @@ export const updateTask = async ({ projectId, taskId, formData }: Pick<TaskServi
     }
 
     throw new Error('Error al intentar actualizar la tarea');
+  }
+}
+
+// Update status
+export const updateTaskStatus = async ({ projectId, taskId, status }: Pick<TaskService, 'projectId' | 'taskId' | 'status'>) => {
+  try {
+    const { data } = await api.put<TApiResponseMessage>(`/projects/${projectId}/tasks/${taskId}`, status);
+    return data.message;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar actualizar el estado de la tarea');
   }
 }
 

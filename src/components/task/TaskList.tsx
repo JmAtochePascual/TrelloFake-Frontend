@@ -1,5 +1,6 @@
 import { TProjectTasks } from "@/types/projectType"
 import TaskCard from "./TaskCard"
+import { statusTranslations } from "@/locales/es"
 
 type TaskListProps = {
   tasks: TProjectTasks
@@ -15,14 +16,6 @@ const initialTasks: TGroupedTasks = {
   inProgress: [],
   underReview: [],
   completed: []
-}
-
-const statusTranslations: { [key: string]: string } = {
-  pending: 'Pendiente',
-  onHold: 'En espera',
-  inProgress: 'En progreso',
-  underReview: 'En revisión',
-  completed: 'Completada'
 }
 
 const statusStyles: { [key: string]: string } = {
@@ -44,7 +37,7 @@ const TaskList = ({ tasks }: TaskListProps) => {
     <>
       <h2 className="mb-4 text-3xl font-black text-gray-800">Tareas</h2>
 
-      <div className='flex gap-5 overflow-x-scroll 2xl:overflow-auto pb-32'>
+      <div className='flex gap-5 overflow-x-auto pb-32'>
         {
           Object.entries(groupedTasks).map(([status, tasks]) =>
             <div
