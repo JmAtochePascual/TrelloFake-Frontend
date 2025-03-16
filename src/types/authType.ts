@@ -14,7 +14,6 @@ export const loginSchema = z.object({
   password: z.string().min(8, { message: "Debes ingresar una contraseña valida" }),
 });
 
-
 export type TRegister = z.infer<typeof registerSchema>;
 
 export type TLogin = z.infer<typeof loginSchema>;

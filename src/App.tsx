@@ -6,6 +6,8 @@ import EditProjectPage from '@/pages/projects/EditProjectPage'
 import ProjectDetailsPage from '@/pages/projects/ProjectDetailsPage'
 import LoginPage from '@/pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
+import AuthLayout from './layouts/AuthLayout'
+import ConfirmUser from './pages/auth/ConfirmUser'
 
 function App() {
 
@@ -15,6 +17,10 @@ function App() {
 
         <Route path='/auth/register' element={<RegisterPage />} />
         <Route path='/auth/login' element={<LoginPage />} />
+
+        <Route element={<AuthLayout />} >
+          <Route path='/auth/confirm-user' element={<ConfirmUser />} />
+        </Route>
 
         <Route element={<AppLayout />} >
           <Route path='/' index element={<DashboardPage />} />

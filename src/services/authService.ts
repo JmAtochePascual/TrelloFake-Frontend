@@ -17,7 +17,6 @@ export const login = async (formData: TLogin) => {
   }
 };
 
-
 // Register user
 export const registerUser = async (formData: TRegister) => {
   try {
@@ -30,5 +29,19 @@ export const registerUser = async (formData: TRegister) => {
     }
 
     throw new Error('Error al intentar registrar');
+  }
+};
+
+// Confirm user
+export const confirmUser = async (formData: { token: string }) => {
+  try {
+    const { data } = await api.post<TApiResponseMessage>('/auth/user-confirm', formData);
+    return data.message;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar confirmar');
   }
 };
