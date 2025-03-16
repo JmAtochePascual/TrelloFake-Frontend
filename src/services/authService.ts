@@ -45,3 +45,17 @@ export const confirmUser = async (formData: { token: string }) => {
     throw new Error('Error al intentar confirmar');
   }
 };
+
+// Resent token
+export const resentToken = async (formData: { email: string }) => {
+  try {
+    const { data } = await api.post<TApiResponseMessage>('/auth/resent-token', formData);
+    return data.message;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar reenviar el token');
+  }
+};

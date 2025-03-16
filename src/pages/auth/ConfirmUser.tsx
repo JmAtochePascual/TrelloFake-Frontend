@@ -3,24 +3,32 @@ import OtpInput from "react-otp-input";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { confirmUser } from "@/services/authService";
+import { useMutation } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 const ConfirmUser = () => {
   const [otp, setOtp] = useState('');
   const isOtpValid = otp.length === 6;
 
-  const handleConfirm = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const message = await confirmUser({ token: otp });
-      toast.success(message);
-      setOtp('');
-    } catch (error) {
+  // Mutate to confirm an user
+  const { mutate } = useMutation({
+    mutationFn: confirmUser,
+    onError: (error) => {
       if (error instanceof Error) {
         toast.error(error.message);
       } else {
         toast.error('Error al intentar confirmar');
       }
+    },
+    onSuccess: (message) => {
+      toast.success(message);
+      setOtp('');
     }
+  });
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    mutate({ token: otp });
   }
 
   return (
@@ -28,7 +36,7 @@ const ConfirmUser = () => {
       <AuthTitle text="Te hemos enviado un código de verificación a tu correo. Ingrésalo para activar tu cuenta." />
 
       <form
-        onSubmit={handleConfirm}
+        onSubmit={onSubmit}
         className="max-w-[400px] flex flex-col items-center gap-8">
 
         <OtpInput
@@ -58,6 +66,12 @@ const ConfirmUser = () => {
           Confirmar Cuenta
         </button>
       </form>
+
+      <Link
+        to="/auth/resent-token"
+        className="text-center text-slate-600">
+        ¿No recibiste el código o expiró? <span className="font-bold text-primary">Reenviar código</span>
+      </Link>
 
       <p className="text-center text-slate-600">
         Si no encuentras el correo, revisa tu bandeja de spam o espera unos minutos antes de solicitar un nuevo código.
