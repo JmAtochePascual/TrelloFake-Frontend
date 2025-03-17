@@ -10,6 +10,7 @@ import AuthLayout from './layouts/AuthLayout'
 import ResentTokenPage from './pages/auth/ResentTokenPage'
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage'
 import ConfirmAccountPage from './pages/auth/ConfirmAccountPage'
+import UpdatePasswordPage from './pages/auth/UpdatePasswordPage'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         <Route element={<AuthLayout />} >
           <Route path='/auth/confirm-account' element={<ConfirmAccountPage />} />
           <Route path='/auth/resent-token' element={<ResentTokenPage />} />
+          <Route path='/auth/reset-password' element={<UpdatePasswordPage />} />
           <Route path='/auth/forgot-password' element={<ForgotPasswordPage />} />
         </Route>
 

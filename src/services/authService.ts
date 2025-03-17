@@ -1,5 +1,5 @@
 import api from "@/config/axios";
-import { TLogin, TRegister, TResendToken, TToken } from "@/types/authType";
+import { TLogin, TRegister, TResendToken, TToken, TUpdatePassword } from "@/types/authType";
 import { TApiResponseMessage } from "@/types/projectType";
 import { isAxiosError } from "axios";
 
@@ -32,7 +32,7 @@ export const createAccount = async (formData: TRegister) => {
 };
 
 // Confirm user
-export const confirmAccount = async (formData: { token: TToken }) => {
+export const confirmAccount = async (formData: TToken) => {
   try {
     const { data } = await api.post<TApiResponseMessage>('/auth/confirm-account', formData);
     return data.message;
@@ -70,5 +70,33 @@ export const forgotPassword = async (formData: TResendToken) => {
     }
 
     throw new Error('Error al intentar restablecer la contraseña');
+  }
+};
+
+// Verify token
+export const verifyToken = async (formData: TToken) => {
+  try {
+    const { data } = await api.post<TApiResponseMessage>('/auth/verify-token', formData);
+    return data.message;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar verificar el token');
+  }
+};
+
+// Update password
+export const updatePassword = async ({ token, formData }: { token: TToken, formData: TUpdatePassword }) => {
+  try {
+    const { data } = await api.post<TApiResponseMessage>(`/auth/update-password/${token.token}`, formData);
+    return data.message;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar actualizar la contraseña');
   }
 };
