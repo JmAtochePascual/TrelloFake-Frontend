@@ -3,11 +3,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import OtpInput from "react-otp-input";
-import { TToken } from "@/types/authType";
+import { TVerifyToken } from "@/types/authType";
 
 type VerifyTokenFormProps = {
   setIsTokenValid: (isValid: boolean) => void;
-  setTokenPassword: (password: TToken['token']) => void;
+  setTokenPassword: (password: TVerifyToken['token']) => void;
 }
 
 const VerifyTokenForm = ({ setIsTokenValid, setTokenPassword }: VerifyTokenFormProps) => {

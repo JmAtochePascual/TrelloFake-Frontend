@@ -1,4 +1,4 @@
-import { TToken, TUpdatePassword, updatePasswordSchema } from "@/types/authType"
+import { TUpdatePassword, TVerifyToken, updatePasswordSchema } from "@/types/authType"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { updatePassword } from "@/services/authService"
@@ -8,7 +8,7 @@ import ErrorMessage from "../ErrorMessage"
 import { useNavigate } from "react-router-dom"
 
 type UpdatePasswordFormProps = {
-  tokenPassword: TToken['token']
+  tokenPassword: TVerifyToken['token']
 }
 
 const UpdatePasswordForm = ({ tokenPassword }: UpdatePasswordFormProps) => {
@@ -18,6 +18,7 @@ const UpdatePasswordForm = ({ tokenPassword }: UpdatePasswordFormProps) => {
     resolver: zodResolver(updatePasswordSchema)
   });
 
+  // Mutate to update password
   const { mutate } = useMutation({
     mutationFn: updatePassword,
     onSuccess: (message) => {

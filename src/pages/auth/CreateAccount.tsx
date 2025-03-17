@@ -1,6 +1,6 @@
 import AuthTitle from "@/components/auth/AuthTitle"
 import { useForm } from "react-hook-form"
-import { registerSchema, TRegister } from "@/types/authType"
+import { createAccountSchema, TCreateAccount } from "@/types/authType"
 import { Link } from "react-router-dom"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation } from "@tanstack/react-query"
@@ -8,10 +8,9 @@ import { toast, ToastContainer } from "react-toastify"
 import { createAccount } from "@/services/authService"
 import AuthRegisterForm from "@/components/auth/AuthRegisterForm"
 
-const RegisterPage = () => {
-
-  const { register, formState: { errors }, handleSubmit, reset } = useForm<TRegister>({
-    resolver: zodResolver(registerSchema)
+const CreateAccount = () => {
+  const { register, formState: { errors }, handleSubmit, reset } = useForm<TCreateAccount>({
+    resolver: zodResolver(createAccountSchema)
   });
 
   // Mutate to register
@@ -28,7 +27,7 @@ const RegisterPage = () => {
     },
   });
 
-  const onSubmit = handleSubmit((formData: TRegister) => mutate(formData));
+  const onSubmit = handleSubmit((formData: TCreateAccount) => mutate(formData));
 
   return (
     <>
@@ -81,9 +80,11 @@ const RegisterPage = () => {
 
       <ToastContainer
         autoClose={2000}
+        pauseOnHover={false}
+        pauseOnFocusLoss={false}
       />
     </>
   )
 }
 
-export default RegisterPage
+export default CreateAccount

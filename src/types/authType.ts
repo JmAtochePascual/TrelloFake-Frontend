@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const registerSchema = z.object({
+export const createAccountSchema = z.object({
   name: z.string().min(1, { message: "Debes ingresar un nombre" }),
   email: z.string().email({ message: "Debes ingresar un correo electronico" }),
   password: z.string().min(8, { message: "Debes ingresar una contraseña" }),
@@ -9,9 +9,12 @@ export const registerSchema = z.object({
   message: "Las contraseñas no coinciden",
 });
 
-export const loginSchema = z.object({
-  email: z.string().email({ message: "Debes ingresar un correo electronico" }),
-  password: z.string().min(8, { message: "Debes ingresar una contraseña valida" }),
+export const resendTokenSchema = z.object({
+  email: z.string().email({ message: "Debes ingresar un correo electronico valido" }),
+});
+
+export const verifyTokenSchema = z.object({
+  token: z.string().min(6, { message: "El token no es válido" }),
 });
 
 export const updatePasswordSchema = z.object({
@@ -21,28 +24,23 @@ export const updatePasswordSchema = z.object({
   message: "Las contraseñas no coinciden",
 });
 
-export const resendTokenSchema = loginSchema.pick({
-  email: true,
+export const loginSchema = z.object({
+  email: z.string().email({ message: "Debes ingresar un correo electronico" }),
+  password: z.string().min(8, { message: "Debes ingresar una contraseña valida" }),
 });
 
-export const forgotPasswordSchema = loginSchema.pick({
-  email: true,
-});
+export type TCreateAccount = z.infer<typeof createAccountSchema>;
 
-export const tokenSchema = z.object({
-  token: z.string().min(6, { message: "El token no es válido" }),
-});
-
-export type TRegister = z.infer<typeof registerSchema>;
-
-export type TLogin = z.infer<typeof loginSchema>;
+export type TConfirmAccount = z.infer<typeof verifyTokenSchema>;
 
 export type TResendToken = z.infer<typeof resendTokenSchema>;
 
-export type TToken = z.infer<typeof tokenSchema>;
+export type TForgotPassword = z.infer<typeof resendTokenSchema>;
+
+export type TVerifyToken = z.infer<typeof verifyTokenSchema>;
 
 export type TUpdatePassword = z.infer<typeof updatePasswordSchema>;
 
-export type TForgotPassword = z.infer<typeof forgotPasswordSchema>;
+export type TLogin = z.infer<typeof loginSchema>;
 
 

@@ -1,10 +1,10 @@
 import api from "@/config/axios";
-import { TLogin, TRegister, TResendToken, TToken, TUpdatePassword } from "@/types/authType";
+import { TLogin, TCreateAccount, TResendToken, TConfirmAccount, TUpdatePassword, TForgotPassword, TVerifyToken } from "@/types/authType";
 import { TApiResponseMessage } from "@/types/projectType";
 import { isAxiosError } from "axios";
 
 // Register user
-export const createAccount = async (formData: TRegister) => {
+export const createAccount = async (formData: TCreateAccount) => {
   try {
     const { data } = await api.post<TApiResponseMessage>('/auth/create-account', formData);
     return data.message;
@@ -18,7 +18,7 @@ export const createAccount = async (formData: TRegister) => {
 };
 
 // Confirm user
-export const confirmAccount = async (formData: TToken) => {
+export const confirmAccount = async (formData: TConfirmAccount) => {
   try {
     const { data } = await api.post<TApiResponseMessage>('/auth/confirm-account', formData);
     return data.message;
@@ -46,7 +46,7 @@ export const resentToken = async (formData: TResendToken) => {
 };
 
 // Forgot password
-export const forgotPassword = async (formData: TResendToken) => {
+export const forgotPassword = async (formData: TForgotPassword) => {
   try {
     const { data } = await api.post<TApiResponseMessage>('/auth/forgot-password', formData);
     return data.message;
@@ -60,7 +60,7 @@ export const forgotPassword = async (formData: TResendToken) => {
 };
 
 // Verify token
-export const verifyToken = async (formData: TToken) => {
+export const verifyToken = async (formData: TVerifyToken) => {
   try {
     const { data } = await api.post<TApiResponseMessage>('/auth/verify-token', formData);
     return data.message;
@@ -74,7 +74,7 @@ export const verifyToken = async (formData: TToken) => {
 };
 
 // Update password
-export const updatePassword = async ({ token, formData }: { token: TToken['token'], formData: TUpdatePassword }) => {
+export const updatePassword = async ({ token, formData }: { token: TConfirmAccount['token'], formData: TUpdatePassword }) => {
   try {
     const { data } = await api.post<TApiResponseMessage>(`/auth/update-password/${token}`, formData);
     return data.message;

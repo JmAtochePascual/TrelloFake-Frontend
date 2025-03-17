@@ -1,7 +1,7 @@
 import AuthTitle from "@/components/auth/AuthTitle"
 import ErrorMessage from "@/components/ErrorMessage"
 import { forgotPassword } from "@/services/authService";
-import { forgotPasswordSchema, TForgotPassword } from "@/types/authType";
+import { resendTokenSchema, TForgotPassword } from "@/types/authType";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 
 const ForgotPasswordPage = () => {
   const { register, formState: { errors }, handleSubmit, reset } = useForm<TForgotPassword>({
-    resolver: zodResolver(forgotPasswordSchema)
+    resolver: zodResolver(resendTokenSchema)
   });
 
   // Mutate to forgot password

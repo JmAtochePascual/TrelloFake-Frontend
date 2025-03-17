@@ -5,12 +5,12 @@ import CreateProjectPage from '@/pages/projects/CreateProjectPage'
 import EditProjectPage from '@/pages/projects/EditProjectPage'
 import ProjectDetailsPage from '@/pages/projects/ProjectDetailsPage'
 import LoginPage from '@/pages/auth/LoginPage'
-import RegisterPage from './pages/auth/RegisterPage'
 import AuthLayout from './layouts/AuthLayout'
 import ResentTokenPage from './pages/auth/ResentTokenPage'
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage'
 import ConfirmAccountPage from './pages/auth/ConfirmAccountPage'
 import UpdatePasswordPage from './pages/auth/UpdatePasswordPage'
+import CreateAccount from './pages/auth/CreateAccount'
 
 function App() {
 
@@ -18,7 +18,7 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        <Route path='/auth/create-account' element={<RegisterPage />} />
+        <Route path='/auth/create-account' element={<CreateAccount />} />
         <Route path='/auth/login' element={<LoginPage />} />
 
         <Route element={<AuthLayout />} >
