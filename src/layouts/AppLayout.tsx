@@ -4,6 +4,9 @@ import MenuHamburguer from "@/components/MenuHamburguer"
 import { ToastContainer } from "react-toastify"
 
 const AppLayout = () => {
+
+  // Get User TODO:
+
   return (
     <>
       <header className="mb-10 py-8 bg-primary">

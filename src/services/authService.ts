@@ -3,20 +3,6 @@ import { TLogin, TRegister, TResendToken, TToken, TUpdatePassword } from "@/type
 import { TApiResponseMessage } from "@/types/projectType";
 import { isAxiosError } from "axios";
 
-// Login user
-export const login = async (formData: TLogin) => {
-  try {
-    await api.post<TApiResponseMessage>('/auth/login', formData);
-    return;
-  } catch (error) {
-    if (isAxiosError(error) && error.response) {
-      throw new Error(error.response.data.message);
-    }
-
-    throw new Error('Error al intentar iniciar sesión');
-  }
-};
-
 // Register user
 export const createAccount = async (formData: TRegister) => {
   try {
@@ -98,5 +84,33 @@ export const updatePassword = async ({ token, formData }: { token: TToken['token
     }
 
     throw new Error('Error al intentar actualizar la contraseña');
+  }
+};
+
+// Login user
+export const login = async (formData: TLogin) => {
+  try {
+    await api.post<TApiResponseMessage>('/auth/login', formData);
+    return;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar iniciar sesión');
+  }
+};
+
+// Logout user
+export const logout = async () => {
+  try {
+    await api.post<TApiResponseMessage>('/auth/logout');
+    return;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar cerrar sesión');
   }
 };

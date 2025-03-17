@@ -1,7 +1,28 @@
+import { logout } from '@/services/authService'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon } from '@heroicons/react/16/solid'
+import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const MenuHamburguer = () => {
+  const navigate = useNavigate();
+
+  // Mutate to logout user
+  const { mutate } = useMutation({
+    mutationFn: logout,
+    onError: (error) => {
+      if (error instanceof Error) {
+        toast.error(error.message)
+      }
+    },
+    onSuccess: () => {
+      navigate('/auth/login')
+    }
+  })
+
+  const handleLogout = () => mutate();
+
   return (
     <nav>
       <Menu>
@@ -29,7 +50,9 @@ const MenuHamburguer = () => {
           </MenuItem>
 
           <MenuItem>
-            <button className="w-full text-start rounded-lg py-1.5 px-3 hover:bg-red-500/80 hover:text-white">
+            <button
+              onClick={handleLogout}
+              className="w-full text-start rounded-lg py-1.5 px-3 hover:bg-red-500/80 hover:text-white">
               Cerrar Sesion
             </button>
           </MenuItem>
