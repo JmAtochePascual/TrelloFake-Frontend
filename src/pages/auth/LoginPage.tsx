@@ -57,7 +57,7 @@ const LoginPage = () => {
           <div className="max-w-[500px] mx-auto flex flex-col gap-8 text-center text-gray-600">
             <div className="flex flex-col gap-2">
               <Link
-                to="/auth/register"
+                to="/auth/create-account"
                 className="text-gray-600 hover:underline">
                 ¿No tienes una cuenta? <span className="font-bold text-primary">Regístrate ahora</span>
               </Link>

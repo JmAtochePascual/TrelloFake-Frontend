@@ -1,16 +1,18 @@
-import { TUpdatePassword, updatePasswordSchema } from "@/types/authType"
+import { TToken, TUpdatePassword, updatePasswordSchema } from "@/types/authType"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { updatePassword } from "@/services/authService"
 import { useMutation } from "@tanstack/react-query"
 import { toast } from "react-toastify"
 import ErrorMessage from "../ErrorMessage"
+import { useNavigate } from "react-router-dom"
 
 type UpdatePasswordFormProps = {
-  tokenPassword: string
+  tokenPassword: TToken['token']
 }
 
 const UpdatePasswordForm = ({ tokenPassword }: UpdatePasswordFormProps) => {
+  const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { errors } } = useForm<TUpdatePassword>({
     resolver: zodResolver(updatePasswordSchema)
@@ -20,7 +22,9 @@ const UpdatePasswordForm = ({ tokenPassword }: UpdatePasswordFormProps) => {
     mutationFn: updatePassword,
     onSuccess: (message) => {
       toast.success(message);
-      // navigate('/auth/login');
+      setTimeout(() => {
+        navigate('/auth/login');
+      }, 2000);
     },
     onError: (error) => {
       if (error instanceof Error) {
@@ -31,7 +35,7 @@ const UpdatePasswordForm = ({ tokenPassword }: UpdatePasswordFormProps) => {
     }
   })
 
-  const onSubmit = handleSubmit((formData: TUpdatePassword) => mutate({ token: { token: tokenPassword }, formData }))
+  const onSubmit = handleSubmit((formData: TUpdatePassword) => mutate({ token: tokenPassword, formData }))
 
   return (
     <form

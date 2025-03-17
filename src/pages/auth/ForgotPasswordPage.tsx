@@ -1,17 +1,19 @@
 import AuthTitle from "@/components/auth/AuthTitle"
 import ErrorMessage from "@/components/ErrorMessage"
 import { forgotPassword } from "@/services/authService";
-import { resendTokenSchema, TResendToken } from "@/types/authType";
+import { forgotPasswordSchema, TForgotPassword } from "@/types/authType";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const ForgotPasswordPage = () => {
-  const { register, formState: { errors }, handleSubmit, reset } = useForm<TResendToken>({
-    resolver: zodResolver(resendTokenSchema)
+  const { register, formState: { errors }, handleSubmit, reset } = useForm<TForgotPassword>({
+    resolver: zodResolver(forgotPasswordSchema)
   });
 
+  // Mutate to forgot password
   const { mutate } = useMutation({
     mutationFn: forgotPassword,
     onError: (error) => {
@@ -25,7 +27,7 @@ const ForgotPasswordPage = () => {
     },
   });
 
-  const onSubmit = handleSubmit((formData: TResendToken) => mutate(formData));
+  const onSubmit = handleSubmit((formData: TForgotPassword) => mutate(formData));
 
   return (
     <div className="max-w-[500px] flex flex-col items-center gap-10">
@@ -59,6 +61,14 @@ const ForgotPasswordPage = () => {
           value="Reestablecer Contraseña"
           className="w-full p-3 font-bold rounded-full shadow-lg bg-primary text-white cursor-pointer hover:bg-secondary" />
       </form>
+
+      <div className="flex flex-col gap-2">
+        <Link
+          to="/auth/login"
+          className="text-gray-600 hover:underline">
+          ¿Ya tienes una cuenta confirmada? <span className="font-bold text-primary">Inicia sesión aquí</span>
+        </Link>
+      </div>
 
       <p className="text-center text-slate-600">
         Si no encuentras el correo, revisa tu bandeja de spam o espera unos minutos antes de solicitar un nuevo código.

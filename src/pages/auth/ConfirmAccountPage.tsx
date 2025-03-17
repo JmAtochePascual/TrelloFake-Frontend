@@ -4,9 +4,10 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { confirmAccount } from "@/services/authService";
 import { useMutation } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ConfirmAccountPage = () => {
+  const navigate = useNavigate();
   const [otp, setOtp] = useState('');
   const isOtpValid = otp.length === 6;
 
@@ -23,6 +24,9 @@ const ConfirmAccountPage = () => {
     onSuccess: (message) => {
       toast.success(message);
       setOtp('');
+      setTimeout(() => {
+        navigate('/auth/login');
+      }, 2000);
     }
   });
 

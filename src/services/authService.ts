@@ -88,9 +88,9 @@ export const verifyToken = async (formData: TToken) => {
 };
 
 // Update password
-export const updatePassword = async ({ token, formData }: { token: TToken, formData: TUpdatePassword }) => {
+export const updatePassword = async ({ token, formData }: { token: TToken['token'], formData: TUpdatePassword }) => {
   try {
-    const { data } = await api.post<TApiResponseMessage>(`/auth/update-password/${token.token}`, formData);
+    const { data } = await api.post<TApiResponseMessage>(`/auth/update-password/${token}`, formData);
     return data.message;
   } catch (error) {
     if (isAxiosError(error) && error.response) {

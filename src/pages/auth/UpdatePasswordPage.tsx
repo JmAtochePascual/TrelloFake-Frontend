@@ -1,11 +1,12 @@
 import AuthTitle from "@/components/auth/AuthTitle"
 import UpdatePasswordForm from "@/components/auth/UpdatePasswordForm";
 import VerifyTokenForm from "@/components/auth/VerifyTokenForm";
+import { TToken } from "@/types/authType";
 import { useState } from "react"
 
 const UpdatePasswordPage = () => {
   const [isTokenValid, setIsTokenValid] = useState(false);
-  const [tokenPassword, setTokenPassword] = useState('');
+  const [tokenPassword, setTokenPassword] = useState<TToken['token']>('');
 
   return (
     <div className="max-w-[500px] flex flex-col items-center gap-10">

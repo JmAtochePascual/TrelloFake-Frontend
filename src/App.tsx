@@ -18,7 +18,7 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        <Route path='/auth/register' element={<RegisterPage />} />
+        <Route path='/auth/create-account' element={<RegisterPage />} />
         <Route path='/auth/login' element={<LoginPage />} />
 
         <Route element={<AuthLayout />} >
