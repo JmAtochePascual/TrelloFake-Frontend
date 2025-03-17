@@ -1,5 +1,5 @@
 import api from "@/config/axios";
-import { TLogin, TRegister } from "@/types/authType";
+import { TLogin, TRegister, TResendToken, TToken } from "@/types/authType";
 import { TApiResponseMessage } from "@/types/projectType";
 import { isAxiosError } from "axios";
 
@@ -18,10 +18,9 @@ export const login = async (formData: TLogin) => {
 };
 
 // Register user
-export const registerUser = async (formData: TRegister) => {
+export const createAccount = async (formData: TRegister) => {
   try {
-    const { data } = await api.post<TApiResponseMessage>('/auth/create', formData);
-    console.log(data.message);
+    const { data } = await api.post<TApiResponseMessage>('/auth/create-account', formData);
     return data.message;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
@@ -33,9 +32,9 @@ export const registerUser = async (formData: TRegister) => {
 };
 
 // Confirm user
-export const confirmUser = async (formData: { token: string }) => {
+export const confirmAccount = async (formData: { token: TToken }) => {
   try {
-    const { data } = await api.post<TApiResponseMessage>('/auth/user-confirm', formData);
+    const { data } = await api.post<TApiResponseMessage>('/auth/confirm-account', formData);
     return data.message;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
@@ -47,9 +46,9 @@ export const confirmUser = async (formData: { token: string }) => {
 };
 
 // Resent token
-export const resentToken = async (formData: { email: string }) => {
+export const resentToken = async (formData: TResendToken) => {
   try {
-    const { data } = await api.post<TApiResponseMessage>('/auth/resent-token', formData);
+    const { data } = await api.post<TApiResponseMessage>('/auth/resend-token', formData);
     return data.message;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
@@ -57,5 +56,19 @@ export const resentToken = async (formData: { email: string }) => {
     }
 
     throw new Error('Error al intentar reenviar el token');
+  }
+};
+
+// Forgot password
+export const forgotPassword = async (formData: TResendToken) => {
+  try {
+    const { data } = await api.post<TApiResponseMessage>('/auth/forgot-password', formData);
+    return data.message;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar restablecer la contraseña');
   }
 };

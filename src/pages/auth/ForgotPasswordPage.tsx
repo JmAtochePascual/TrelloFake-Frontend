@@ -1,38 +1,35 @@
 import AuthTitle from "@/components/auth/AuthTitle"
 import ErrorMessage from "@/components/ErrorMessage"
-import { resendTokenSchema, TResendToken } from "@/types/authType"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation } from "@tanstack/react-query"
-import { resentToken } from "@/services/authService"
-import { toast } from "react-toastify"
+import { forgotPassword } from "@/services/authService";
+import { resendTokenSchema, TResendToken } from "@/types/authType";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
-const ResentTokenPage = () => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<TResendToken>({
+const ForgotPasswordPage = () => {
+  const { register, formState: { errors }, handleSubmit, reset } = useForm<TResendToken>({
     resolver: zodResolver(resendTokenSchema)
   });
 
-  // Mutate to resent token
   const { mutate } = useMutation({
-    mutationFn: resentToken,
+    mutationFn: forgotPassword,
     onError: (error) => {
       if (error instanceof Error) {
-        toast.error(error.message)
-      } else {
-        toast.error('Error al intentar reenviar el token')
+        toast.error(error.message);
       }
     },
     onSuccess: (message) => {
-      toast.success(message);
       reset();
-    }
-  })
+      toast.success(message);
+    },
+  });
 
-  const onSubmit = handleSubmit((formData: TResendToken) => mutate(formData))
+  const onSubmit = handleSubmit((formData: TResendToken) => mutate(formData));
 
   return (
     <div className="max-w-[500px] flex flex-col items-center gap-10">
-      <AuthTitle text="Si no recibiste el código en tu correo o experiró, ingresa tu email y te enviaremos uno nuevo." />
+      <AuthTitle text="Ingresa tu email y te enviaremos un enlace para restablecer tu contraseña." />
 
       <form
         onSubmit={onSubmit}
@@ -59,7 +56,7 @@ const ResentTokenPage = () => {
 
         <input
           type="submit"
-          value="Reenviar Código"
+          value="Reestablecer Contraseña"
           className="w-full p-3 font-bold rounded-full shadow-lg bg-primary text-white cursor-pointer hover:bg-secondary" />
       </form>
 
@@ -70,4 +67,4 @@ const ResentTokenPage = () => {
   )
 }
 
-export default ResentTokenPage
+export default ForgotPasswordPage

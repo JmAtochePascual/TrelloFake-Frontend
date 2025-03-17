@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation } from "@tanstack/react-query"
 import { toast, ToastContainer } from "react-toastify"
-import { registerUser } from "@/services/authService"
+import { createAccount } from "@/services/authService"
 import AuthRegisterForm from "@/components/auth/AuthRegisterForm"
 
 const RegisterPage = () => {
@@ -16,7 +16,7 @@ const RegisterPage = () => {
 
   // Mutate to register
   const { mutate } = useMutation({
-    mutationFn: registerUser,
+    mutationFn: createAccount,
     onError: (error) => {
       if (error instanceof Error) {
         toast.error(error.message);
@@ -56,11 +56,19 @@ const RegisterPage = () => {
           </form>
 
           <div className="max-w-[500px] mx-auto flex flex-col gap-8 text-center text-gray-600">
-            <Link
-              to="/auth/login"
-              className="text-gray-600 hover:underline">
-              Ya tienes una cuenta? <span className="font-bold text-primary">Inicia Sesión</span>
-            </Link>
+
+            <div className="flex flex-col gap-2">
+              <Link
+                to="/auth/login"
+                className="text-gray-600 hover:underline">
+                ¿Ya tienes una cuenta? <span className="font-bold text-primary">Inicia sesión aquí</span>
+              </Link>
+              <Link
+                to="/auth/forgot-password"
+                className="text-gray-600 hover:underline">
+                ¿Olvidaste tu contraseña? <span className="font-bold text-primary">Recupérala aquí</span>
+              </Link>
+            </div>
 
             <p>
               Tu información está segura con nosotros. Nunca compartiremos tus datos sin tu consentimiento

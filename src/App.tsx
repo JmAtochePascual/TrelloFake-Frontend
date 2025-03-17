@@ -7,8 +7,9 @@ import ProjectDetailsPage from '@/pages/projects/ProjectDetailsPage'
 import LoginPage from '@/pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
 import AuthLayout from './layouts/AuthLayout'
-import ConfirmUser from './pages/auth/ConfirmUser'
 import ResentTokenPage from './pages/auth/ResentTokenPage'
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage'
+import ConfirmAccountPage from './pages/auth/ConfirmAccountPage'
 
 function App() {
 
@@ -20,8 +21,9 @@ function App() {
         <Route path='/auth/login' element={<LoginPage />} />
 
         <Route element={<AuthLayout />} >
-          <Route path='/auth/confirm-user' element={<ConfirmUser />} />
+          <Route path='/auth/confirm-account' element={<ConfirmAccountPage />} />
           <Route path='/auth/resent-token' element={<ResentTokenPage />} />
+          <Route path='/auth/forgot-password' element={<ForgotPasswordPage />} />
         </Route>
 
         <Route element={<AppLayout />} >

@@ -55,11 +55,19 @@ const LoginPage = () => {
           </form>
 
           <div className="max-w-[500px] mx-auto flex flex-col gap-8 text-center text-gray-600">
-            <Link
-              to="/auth/register"
-              className="text-gray-600 hover:underline">
-              No tienes una cuenta? <span className="font-bold text-primary">Registrate</span>
-            </Link>
+            <div className="flex flex-col gap-2">
+              <Link
+                to="/auth/register"
+                className="text-gray-600 hover:underline">
+                ¿No tienes una cuenta? <span className="font-bold text-primary">Regístrate ahora</span>
+              </Link>
+
+              <Link
+                to="/auth/forgot-password"
+                className="text-gray-600 hover:underline">
+                ¿Olvidate tu contraseña? <span className="font-bold text-primary">Recupérala aquí</span>
+              </Link>
+            </div>
 
             <p>
               Tu información está segura con nosotros. Nunca compartiremos tus datos sin tu consentimiento

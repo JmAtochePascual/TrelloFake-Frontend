@@ -2,17 +2,17 @@ import AuthTitle from "@/components/auth/AuthTitle"
 import OtpInput from "react-otp-input";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { confirmUser } from "@/services/authService";
+import { confirmAccount } from "@/services/authService";
 import { useMutation } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
-const ConfirmUser = () => {
+const ConfirmAccountPage = () => {
   const [otp, setOtp] = useState('');
   const isOtpValid = otp.length === 6;
 
   // Mutate to confirm an user
   const { mutate } = useMutation({
-    mutationFn: confirmUser,
+    mutationFn: confirmAccount,
     onError: (error) => {
       if (error instanceof Error) {
         toast.error(error.message);
@@ -80,4 +80,4 @@ const ConfirmUser = () => {
   )
 }
 
-export default ConfirmUser
+export default ConfirmAccountPage
