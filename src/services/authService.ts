@@ -1,5 +1,5 @@
 import api from "@/config/axios";
-import { TLogin, TCreateAccount, TResendToken, TConfirmAccount, TUpdatePassword, TForgotPassword, TVerifyToken } from "@/types/authType";
+import { TLogin, TCreateAccount, TResendToken, TConfirmAccount, TUpdatePassword, TForgotPassword, TVerifyToken, TProfile } from "@/types/authType";
 import { TApiResponseMessage } from "@/types/projectType";
 import { isAxiosError } from "axios";
 
@@ -114,3 +114,18 @@ export const logout = async () => {
     throw new Error('Error al intentar cerrar sesión');
   }
 };
+
+// Get profile
+export const getProfile = async () => {
+  try {
+    const { data } = await api.get<TProfile>('/auth/profile');
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar obtener perfil');
+  }
+};
+

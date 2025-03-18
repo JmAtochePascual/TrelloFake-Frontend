@@ -10,6 +10,7 @@ const DashboardPage = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['projects'],
     queryFn: getProjects,
+    retry: false,
   })
 
   if (isLoading) return <p>Cargando...</p>

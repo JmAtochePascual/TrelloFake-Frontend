@@ -29,6 +29,16 @@ export const loginSchema = z.object({
   password: z.string().min(8, { message: "Debes ingresar una contraseña valida" }),
 });
 
+export const profileSchema = z.object({
+  _id: z.string(),
+  name: z.string(),
+  email: z.string(),
+  confirmed: z.boolean(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  __v: z.number()
+});
+
 export type TCreateAccount = z.infer<typeof createAccountSchema>;
 
 export type TConfirmAccount = z.infer<typeof verifyTokenSchema>;
@@ -42,5 +52,8 @@ export type TVerifyToken = z.infer<typeof verifyTokenSchema>;
 export type TUpdatePassword = z.infer<typeof updatePasswordSchema>;
 
 export type TLogin = z.infer<typeof loginSchema>;
+
+export type TProfile = z.infer<typeof profileSchema>;
+
 
 

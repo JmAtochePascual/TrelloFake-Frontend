@@ -1,12 +1,18 @@
 import { logout } from '@/services/authService'
+import { TProfile } from '@/types/authType';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon } from '@heroicons/react/16/solid'
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-const MenuHamburguer = () => {
+type MenuHamburguerProps = {
+  name: TProfile['name']
+}
+
+const MenuHamburguer = ({ name }: MenuHamburguerProps) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   // Mutate to logout user
   const { mutate } = useMutation({
@@ -17,7 +23,8 @@ const MenuHamburguer = () => {
       }
     },
     onSuccess: () => {
-      navigate('/auth/login')
+      queryClient.clear();
+      navigate('/auth/login');
     }
   })
 
@@ -35,7 +42,7 @@ const MenuHamburguer = () => {
           anchor="bottom end"
           className="w-52 mt-2 flex flex-col origin-top-right rounded-xl borde bg-white px-2 text-sm/6 transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 shadow-2xl">
 
-          <p className='p-2 text-center text-sm/6'>Hola Usuario</p>
+          <p className='p-2 text-center text-sm/6'>Hola {name}</p>
 
           <MenuItem>
             <button className="w-full text-start rounded-lg py-1.5 px-3 hover:bg-secondary/80 hover:text-white">
