@@ -33,7 +33,7 @@ const MenuHamburguer = ({ name }: MenuHamburguerProps) => {
   return (
     <nav>
       <Menu>
-        <MenuButton className="inline-flex items-center gap-2 rounded-md bg-secondary py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white">
+        <MenuButton className="inline-flex items-center gap-2 rounded-md bg-primaryHover py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white">
           <Bars3Icon className="size-6" />
         </MenuButton>
 
@@ -45,13 +45,13 @@ const MenuHamburguer = ({ name }: MenuHamburguerProps) => {
           <p className='p-2 text-center text-sm/6'>Hola {name}</p>
 
           <MenuItem>
-            <button className="w-full text-start rounded-lg py-1.5 px-3 hover:bg-secondary/80 hover:text-white">
+            <button className="w-full text-start rounded-lg py-1.5 px-3 hover:bg-primaryHover/80 hover:text-white">
               Mi Perfil
             </button>
           </MenuItem>
 
           <MenuItem>
-            <button className="w-full text-start rounded-lg py-1.5 px-3 hover:bg-secondary/80 hover:text-white">
+            <button className="w-full text-start rounded-lg py-1.5 px-3 hover:bg-primaryHover/80 hover:text-white">
               Mis Proyectos
             </button>
           </MenuItem>

@@ -11,6 +11,7 @@ import ForgotPasswordPage from './pages/auth/ForgotPasswordPage'
 import ConfirmAccountPage from './pages/auth/ConfirmAccountPage'
 import UpdatePasswordPage from './pages/auth/UpdatePasswordPage'
 import CreateAccount from './pages/auth/CreateAccount'
+import ProjectTeamPage from './pages/projects/ProjectTeamPage'
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
           <Route path='/projects/create' element={<CreateProjectPage />} />
           <Route path='/projects/:projectId' element={<ProjectDetailsPage />} />
           <Route path='/projects/:projectId/edit' element={<EditProjectPage />} />
+          <Route path='/projects/:projectId/team' element={<ProjectTeamPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

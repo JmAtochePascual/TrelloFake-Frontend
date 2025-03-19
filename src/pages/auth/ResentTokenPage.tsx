@@ -60,7 +60,7 @@ const ResentTokenPage = () => {
         <input
           type="submit"
           value="Reenviar Código"
-          className="w-full p-3 font-bold rounded-full shadow-lg bg-primary text-white cursor-pointer hover:bg-secondary" />
+          className="w-full p-3 font-bold rounded-full shadow-lg bg-primary text-white cursor-pointer hover:bg-primaryHover" />
       </form>
 
       <p className="text-center text-slate-600">

@@ -51,7 +51,7 @@ const LoginPage = () => {
             <input
               type="submit"
               value="Iniciar Sesión"
-              className="w-full p-3 font-bold rounded-full shadow-lg bg-primary text-white cursor-pointer hover:bg-secondary" />
+              className="w-full p-3 font-bold rounded-full shadow-lg bg-primary text-white cursor-pointer hover:bg-primaryHover" />
           </form>
 
           <div className="max-w-[500px] mx-auto flex flex-col gap-8 text-center text-gray-600">

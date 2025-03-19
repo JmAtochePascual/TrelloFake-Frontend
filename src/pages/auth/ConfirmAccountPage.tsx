@@ -66,7 +66,7 @@ const ConfirmAccountPage = () => {
 
         <button
           disabled={!isOtpValid}
-          className={`bg-primary text-white px-4 py-2 rounded ${!isOtpValid ? 'opacity-50 cursor-not-allowed' : 'hover:bg-secondary'}`} >
+          className={`bg-primary text-white px-4 py-2 rounded ${!isOtpValid ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primaryHover'}`} >
           Confirmar Cuenta
         </button>
       </form>

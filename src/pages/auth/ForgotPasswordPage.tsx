@@ -59,7 +59,7 @@ const ForgotPasswordPage = () => {
         <input
           type="submit"
           value="Reestablecer Contraseña"
-          className="w-full p-3 font-bold rounded-full shadow-lg bg-primary text-white cursor-pointer hover:bg-secondary" />
+          className="w-full p-3 font-bold rounded-full shadow-lg bg-primary text-white cursor-pointer hover:bg-primaryHover" />
       </form>
 
       <div className="flex flex-col gap-2">

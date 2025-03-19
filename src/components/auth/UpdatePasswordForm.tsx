@@ -81,7 +81,7 @@ const UpdatePasswordForm = ({ tokenPassword }: UpdatePasswordFormProps) => {
       <input
         type="submit"
         value="Cambiar Contraseña"
-        className="w-full p-3 font-bold rounded-full shadow-lg bg-primary text-white cursor-pointer hover:bg-secondary" />
+        className="w-full p-3 font-bold rounded-full shadow-lg bg-primary text-white cursor-pointer hover:bg-primaryHover" />
     </form>
   )
 }

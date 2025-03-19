@@ -25,7 +25,7 @@ const DashboardPage = () => {
       <nav className="mb-12">
         <Link
           to="/projects/create"
-          className="mb-12 px-4 py-2 text-white bg-primary hover:bg-secondary">
+          className="mb-12 px-4 py-2 text-white bg-primary hover:bg-primaryHover">
           Crear Proyecto
         </Link>
       </nav>

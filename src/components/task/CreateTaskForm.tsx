@@ -79,7 +79,7 @@ const CreateTaskForm = () => {
       <input
         type="submit"
         value="Crear Tarea"
-        className="w-full p-2 font-bold bg-primary text-white cursor-pointer hover:bg-secondary" />
+        className="w-full p-2 font-bold bg-primary text-white cursor-pointer hover:bg-primaryHover" />
     </form>
   )
 }

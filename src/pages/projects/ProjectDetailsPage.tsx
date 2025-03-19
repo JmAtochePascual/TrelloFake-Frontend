@@ -4,7 +4,7 @@ import TaskModal from "@/components/task/TaskModal";
 import TaskModalDetails from "@/components/task/TaskModalDetails";
 import { getProject } from "@/services/projectService";
 import { useQuery } from "@tanstack/react-query";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 
 const ProjectDetailsPage = () => {
   const params = useParams();
@@ -27,11 +27,19 @@ const ProjectDetailsPage = () => {
         <p className="text-gray-600">{data.description}</p>
       </div>
 
-      <button
-        onClick={() => navigate('?newtask=true')}
-        className="mb-12 px-4 py-2 text-white bg-primary hover:bg-secondary">
-        Crear Tarea
-      </button>
+      <nav className="mb-12 flex gap-2">
+        <button
+          onClick={() => navigate('?newtask=true')}
+          className="px-4 py-2 text-white bg-primary hover:bg-primaryHover">
+          Crear Tarea
+        </button>
+
+        <Link
+          to={'team'}
+          className="px-4 py-2 text-white bg-fuchsia-600 hover:bg-fuchsia-700">
+          Colaboradores
+        </Link>
+      </nav>
 
 
       <TaskList tasks={data.tasks} />

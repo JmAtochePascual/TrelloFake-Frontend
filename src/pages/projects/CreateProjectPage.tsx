@@ -40,7 +40,7 @@ const CreateProjectPage = () => {
       <nav className="mb-12">
         <Link
           to="/"
-          className="mb-12 px-4 py-2 text-white bg-primary hover:bg-secondary">
+          className="mb-12 px-4 py-2 text-white bg-primary hover:bg-primaryHover">
           Volver a Dashboard
         </Link>
       </nav>
@@ -59,7 +59,7 @@ const CreateProjectPage = () => {
         <input
           type="submit"
           value="Crear Proyecto"
-          className="w-full p-2 font-bold bg-primary text-white cursor-pointer hover:bg-secondary" />
+          className="w-full p-2 font-bold bg-primary text-white cursor-pointer hover:bg-primaryHover" />
       </form>
     </>
   )

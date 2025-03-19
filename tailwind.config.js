@@ -8,7 +8,7 @@ export default {
       },
       backgroundColor: {
         primary: "#6A4EE9",
-        secondary: "#5739dd",
+        primaryHover: "#5739dd",
       },
       backgroundImage: {
         login: "url('/bg-login.png')",
