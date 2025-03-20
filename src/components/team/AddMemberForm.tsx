@@ -11,14 +11,20 @@ const AddMemberForm = () => {
   const params = useParams();
   const projectId = params.projectId!;
 
-  const { register, handleSubmit, formState: { errors } } = useForm<TTeamMemberCreate>({
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<TTeamMemberCreate>({
     resolver: zodResolver(teamMemberCreateSchema)
   });
 
   // Mutate to find an user 
   const mutation = useMutation({
     mutationFn: findMenberByEmail
-  })
+  });
+
+  // Reset form
+  const resetForm = () => {
+    reset();
+    mutation.reset();
+  };
 
   const onSubmit = handleSubmit((formData: TTeamMemberCreate) => mutation.mutate({ projectId, formData }));
 
@@ -52,8 +58,17 @@ const AddMemberForm = () => {
         className="w-full p-2 font-bold bg-primary text-white cursor-pointer hover:bg-primaryHover" />
 
       {mutation.isPending && <p className='text-center text-primary'>Cargando...</p>}
+
       {mutation.isError && <p className='text-center text-red-500'>{mutation.error.message}</p>}
-      {mutation.data && <SearchResult user={mutation.data} />}
+
+      {
+        mutation.data &&
+        <SearchResult
+          user={mutation.data}
+          projectId={projectId}
+          resetForm={resetForm}
+        />
+      }
     </form>
   )
 }
