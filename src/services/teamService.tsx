@@ -6,7 +6,8 @@ import { isAxiosError } from "axios";
 export type TTeamProps = {
   formData: TTeamMemberCreate,
   projectId: TProject['_id'],
-  id: TTeamMember['_id']
+  id: TTeamMember['_id'],
+  memberId: TTeamMember['_id'],
 }
 
 // Search a member by email
@@ -49,5 +50,19 @@ export const getTeam = async (projectId: TProject['_id']) => {
     }
 
     throw new Error('Error al intentar obtener los miembros del proyecto');
+  }
+};
+
+// Delete member from team
+export const removeMemberFromTeam = async ({ projectId, memberId }: Pick<TTeamProps, 'projectId' | 'memberId'>) => {
+  try {
+    const { data } = await api.delete<TApiResponseMessage>(`/projects/${projectId}/team/${memberId}`);
+    return data.message;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar eliminar el usuario del proyecto');
   }
 };

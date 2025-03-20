@@ -1,12 +1,34 @@
+import { removeMemberFromTeam } from '@/services/teamService'
 import { TTeamMember } from '@/types/teamType'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/16/solid'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 type TeamCardProps = {
   member: TTeamMember
 }
 
 const TeamCard = ({ member }: TeamCardProps) => {
+  const params = useParams();
+  const projectId = params.projectId!;
+
+  const queryClient = useQueryClient();
+  // Mutate to remove a member from the team
+  const { mutate } = useMutation({
+    mutationFn: removeMemberFromTeam,
+    onError: (error) => {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    },
+    onSuccess: (message) => {
+      toast.success(message);
+      queryClient.invalidateQueries({ queryKey: ['members', projectId] });
+    }
+  });
+
   return (
     <li className="flex justify-between items-start px-4 py-8">
       <div>
@@ -36,6 +58,7 @@ const TeamCard = ({ member }: TeamCardProps) => {
           <MenuItem>
             <button
               type="button"
+              onClick={() => mutate({ projectId, memberId: member._id })}
               className="w-full text-start text-red-500 rounded-lg py-1.5 px-3 hover:text-red-700">
               Eliminar del proyecto
             </button>
