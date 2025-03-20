@@ -11,7 +11,7 @@ const DashboardPage = () => {
     queryKey: ['projects'],
     queryFn: getProjects,
     retry: false,
-  })
+  });
 
   if (isLoading) return <p>Cargando...</p>
   if (isError) return <Navigate to="/404" />
