@@ -36,4 +36,18 @@ export const addMemberToTeam = async ({ projectId, id }: Pick<TTeamProps, 'proje
 
     throw new Error('Error al intentar agregar el usuario al proyecto');
   }
-}
+};
+
+// Get all members in the project
+export const getTeam = async (projectId: TProject['_id']) => {
+  try {
+    const { data } = await api.get<TTeamMember[]>(`/projects/${projectId}/team`);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar obtener los miembros del proyecto');
+  }
+};

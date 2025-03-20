@@ -1,7 +1,7 @@
 import { addMemberToTeam } from "@/services/teamService"
 import { TProject } from "@/types/projectType"
 import { TTeamMember } from "@/types/teamType"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "react-toastify"
 
 type SearchResultProps = {
@@ -11,7 +11,7 @@ type SearchResultProps = {
 }
 
 const SearchResult = ({ user, projectId, resetForm }: SearchResultProps) => {
-
+  const queryClient = useQueryClient();
 
   // Muttate to add a member to the project
   const { mutate } = useMutation({
@@ -24,6 +24,7 @@ const SearchResult = ({ user, projectId, resetForm }: SearchResultProps) => {
     onSuccess: (message) => {
       toast.success(message);
       resetForm();
+      queryClient.invalidateQueries({ queryKey: ['members', projectId] });
     }
   });
 
