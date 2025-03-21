@@ -1,10 +1,12 @@
 import ProjectCard from "@/components/projects/ProjectCard"
+import useAuth from "@/hooks/useAuth"
 import { getProjects } from "@/services/projectService"
 import { TProject } from "@/types/projectType"
 import { useQuery } from "@tanstack/react-query"
 import { Link, Navigate } from "react-router-dom"
 
 const DashboardPage = () => {
+  const { data: user, isLoading: userLoading } = useAuth();
 
   // Query to get the projects
   const { data, isLoading, isError } = useQuery({
@@ -13,9 +15,9 @@ const DashboardPage = () => {
     retry: false,
   });
 
-  if (isLoading) return <p>Cargando...</p>
+  if (isLoading && userLoading) return <p>Cargando...</p>
   if (isError) return <Navigate to="/404" />
-  if (data) return (
+  if (data && user) return (
     <>
       <div className="mb-6 flex flex-col gap-1">
         <h1 className="text-3xl font-black text-gray-800 md:text-5xl">Crea un Proyecto</h1>
@@ -44,7 +46,9 @@ const DashboardPage = () => {
               data.map((project: TProject) => (
                 <ProjectCard
                   key={project._id}
-                  project={project} />
+                  project={project}
+                  user={user}
+                />
               ))
             }
           </ul>

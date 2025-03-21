@@ -1,5 +1,7 @@
 import { deleteProject } from "@/services/projectService"
+import { TProfile } from "@/types/authType"
 import { TProject } from "@/types/projectType"
+import { isManager } from "@/utils/isManager"
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -7,10 +9,11 @@ import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
 
 type ProjectCardProps = {
-  project: TProject
+  project: TProject,
+  user: TProfile
 }
 
-const ProjectCard = ({ project }: ProjectCardProps) => {
+const ProjectCard = ({ project, user }: ProjectCardProps) => {
   const queryClient = useQueryClient();
 
   // Mutate to delete the project
@@ -25,7 +28,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
       toast.success(message);
     },
-  })
+  });
 
   const handleDelete = () => mutate(project._id);
 
@@ -33,6 +36,9 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
     <li className="flex justify-between items-start px-4 py-8">
       <div>
         <div className="flex flex-col gap-2">
+          <p className={`w-fit py-0.5 px-4 border rounded-md ${isManager(project.manager, user._id) ? 'text-green-600 border-green-600 bg-green-100' : 'border-purple-600 text-purple-600 bg-purple-100'}`}>
+            {isManager(project.manager, user._id) ? 'Manager' : 'Colaborador'}
+          </p>
           <Link
             to={`/projects/${project._id}`}
             className="text-gray-600 cursor-pointer hover:underline text-3xl font-bold">
@@ -69,22 +75,27 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             </Link>
           </MenuItem>
 
-          <MenuItem>
-            <Link
-              to={`/projects/${project._id}/edit`}
-              className="w-full text-start text-gray-700 rounded-lg py-1.5 px-3 hover:text-black">
-              Editar Proyecto
-            </Link>
-          </MenuItem>
+          {
+            isManager(project.manager, user._id) &&
+            <>
+              <MenuItem>
+                <Link
+                  to={`/projects/${project._id}/edit`}
+                  className="w-full text-start text-gray-700 rounded-lg py-1.5 px-3 hover:text-black">
+                  Editar Proyecto
+                </Link>
+              </MenuItem>
 
-          <MenuItem>
-            <button
-              type="button"
-              onClick={handleDelete}
-              className="w-full text-start text-red-500 rounded-lg py-1.5 px-3 hover:text-red-700">
-              Eliminar Proyecto
-            </button>
-          </MenuItem>
+              <MenuItem>
+                <button
+                  type="button"
+                  onClick={handleDelete}
+                  className="w-full text-start text-red-500 rounded-lg py-1.5 px-3 hover:text-red-700">
+                  Eliminar Proyecto
+                </button>
+              </MenuItem>
+            </>
+          }
           <div className="my-1 h-px bg-white/5" />
         </MenuItems>
       </Menu>
