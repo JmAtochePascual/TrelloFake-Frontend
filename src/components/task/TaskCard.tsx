@@ -7,10 +7,11 @@ import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 
 type TaskCardProps = {
-  task: TProjectTask
+  task: TProjectTask,
+  canEdit: boolean
 }
 
-const TaskCard = ({ task }: TaskCardProps) => {
+const TaskCard = ({ task, canEdit }: TaskCardProps) => {
   const navigate = useNavigate();
   const params = useParams();
   const projectId = params.projectId!;
@@ -38,6 +39,7 @@ const TaskCard = ({ task }: TaskCardProps) => {
       <div className="flex flex-col gap-1">
         <button
           type="button"
+          onClick={() => navigate('?taskDetails=' + task._id)}
           className="font-bold text-start">
           {task.name}
         </button>
@@ -65,22 +67,28 @@ const TaskCard = ({ task }: TaskCardProps) => {
             </button>
           </MenuItem>
 
-          <MenuItem>
-            <button
-              onClick={() => navigate('?editTask=' + task._id)}
-              className="w-full text-start text-gray-700 rounded-lg py-1.5 px-3 hover:text-black">
-              Editar Tarea
-            </button>
-          </MenuItem>
+          {
+            canEdit &&
+            <>
+              <MenuItem>
+                <button
+                  onClick={() => navigate('?editTask=' + task._id)}
+                  className="w-full text-start text-gray-700 rounded-lg py-1.5 px-3 hover:text-black">
+                  Editar Tarea
+                </button>
+              </MenuItem>
 
-          <MenuItem>
-            <button
-              onClick={onDelete}
-              type="button"
-              className="w-full text-start text-red-500 rounded-lg py-1.5 px-3 hover:text-red-700">
-              Eliminar Tarea
-            </button>
-          </MenuItem>
+              <MenuItem>
+                <button
+                  onClick={onDelete}
+                  type="button"
+                  className="w-full text-start text-red-500 rounded-lg py-1.5 px-3 hover:text-red-700">
+                  Eliminar Tarea
+                </button>
+              </MenuItem>
+            </>
+          }
+
           <div className="my-1 h-px bg-white/5" />
         </MenuItems>
       </Menu>
