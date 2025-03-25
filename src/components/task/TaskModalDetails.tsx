@@ -38,7 +38,7 @@ const TaskModalDetails = () => {
     onSuccess: (message) => {
       queryClient.invalidateQueries({ queryKey: ['task', taskId] });
       queryClient.invalidateQueries({ queryKey: ['project', projectId] });
-      navigate(location.pathname, { replace: true });
+      // navigate(location.pathname, { replace: true });
       toast.success(message);
     },
   });
@@ -71,10 +71,16 @@ const TaskModalDetails = () => {
               Última actualización: <span className="font-light">{formatDate(data.updatedAt)}</span>
             </p>
 
+            <p className="mb-2 text-lg font-bold text-slate-600">
+              Historiasl de Cambios:
+            </p>
+
             {
-              data.completedBy && (
-                <p className='flex flex-col gap-1 text-sm font-semibold text-slate-600 md:flex-row'>
-                  Estado actualizado por: <span className="font-light">{data.completedBy?.name}</span>
+              data.completedBy.map((completedBy) =>
+                <p
+                  key={completedBy._id}
+                  className='flex flex-col gap-1 text-sm font-semibold text-slate-600 md:flex-row'>
+                  {statusTranslations[completedBy.status]} por: <span className="font-light">{completedBy.user.name}</span>
                 </p>
               )
             }
