@@ -71,6 +71,14 @@ const TaskModalDetails = () => {
               Última actualización: <span className="font-light">{formatDate(data.updatedAt)}</span>
             </p>
 
+            {
+              data.completedBy && (
+                <p className='flex flex-col gap-1 text-sm font-semibold text-slate-600 md:flex-row'>
+                  Estado actualizado por: <span className="font-light">{data.completedBy?.name}</span>
+                </p>
+              )
+            }
+
             <DialogTitle
               as="h3"
               className="text-3xl font-black te text-gray-700">

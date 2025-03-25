@@ -7,6 +7,17 @@ export const taskSchema = z.object({
   name: z.string().min(1, "El nombre de la tarea es requerido"),
   description: z.string().min(1, "La descripción es requerida"),
   status: taskStatusSchema,
+  completedBy: z.array(
+    z.object({
+      user: z.object({
+        _id: z.string(),
+        name: z.string(),
+        email: z.string()
+      }),
+      status: z.string(),
+      _id: z.string()
+    })
+  ),
   project: z.object({
     _id: z.string(),
     projectName: z.string(),
