@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { noteCreateSchema, NoteCreateType } from "@/types/noteType";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ErrorMessage from "../ErrorMessage";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createNote } from "@/services/noteService";
 import { toast } from "react-toastify";
 import { useLocation, useParams } from "react-router-dom";
@@ -16,6 +16,8 @@ const NoteForm = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const taskId = queryParams.get('taskDetails')!;
+
+  const queryClient = useQueryClient();
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<NoteCreateType>({
     resolver: zodResolver(noteCreateSchema)
@@ -32,6 +34,7 @@ const NoteForm = () => {
       }
     },
     onSuccess: (message) => {
+      queryClient.invalidateQueries({ queryKey: ['task', taskId] });
       toast.success(message);
       reset();
     }

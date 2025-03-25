@@ -28,8 +28,6 @@ const TaskModalDetails = () => {
     enabled: !!taskId
   });
 
-  console.log(data);
-
   // Mutation to update task status
   const { mutate } = useMutation({
     mutationFn: updateTaskStatus,
@@ -130,7 +128,9 @@ const TaskModalDetails = () => {
               </select>
             </div>
 
-            <NotePanel />
+            <NotePanel
+              notes={data.notes}
+            />
 
           </DialogPanel>
         </div>
