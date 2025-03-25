@@ -7,6 +7,7 @@ import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify";
 import { ChangeEvent } from "react";
 import { TTask } from "@/types/taskType";
+import NotePanel from "../notes/NotePanel";
 
 const TaskModalDetails = () => {
   const navigate = useNavigate();
@@ -26,6 +27,8 @@ const TaskModalDetails = () => {
     retry: false,
     enabled: !!taskId
   });
+
+  console.log(data);
 
   // Mutation to update task status
   const { mutate } = useMutation({
@@ -71,18 +74,24 @@ const TaskModalDetails = () => {
               Última actualización: <span className="font-light">{formatDate(data.updatedAt)}</span>
             </p>
 
-            <p className="mb-2 text-lg font-bold text-slate-600">
-              Historiasl de Cambios:
-            </p>
-
             {
-              data.completedBy.map((completedBy) =>
-                <p
-                  key={completedBy._id}
-                  className='flex flex-col gap-1 text-sm font-semibold text-slate-600 md:flex-row'>
-                  {statusTranslations[completedBy.status]} por: <span className="font-light">{completedBy.user.name}</span>
-                </p>
-              )
+              data.completedBy.length === 0
+                ? null
+                : <>
+                  <p className="mb-2 text-lg font-bold text-slate-600">
+                    Historiasl de Cambios:
+                  </p>
+
+                  {
+                    data.completedBy.map((completedBy) =>
+                      <p
+                        key={completedBy._id}
+                        className='flex flex-col gap-1 text-sm font-semibold text-slate-600 md:flex-row'>
+                        {statusTranslations[completedBy.status]} por: <span className="font-light">{completedBy.user.name}</span>
+                      </p>
+                    )
+                  }
+                </>
             }
 
             <DialogTitle
@@ -120,6 +129,9 @@ const TaskModalDetails = () => {
                 }
               </select>
             </div>
+
+            <NotePanel />
+
           </DialogPanel>
         </div>
       </Dialog>
