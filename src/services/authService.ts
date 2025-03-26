@@ -1,5 +1,5 @@
 import api from "@/config/axios";
-import { TLogin, TCreateAccount, TResendToken, TConfirmAccount, TUpdatePassword, TForgotPassword, TVerifyToken, TProfile } from "@/types/authType";
+import { TLogin, TCreateAccount, TResendToken, TConfirmAccount, TUpdatePassword, TForgotPassword, TVerifyToken, TProfile, TUser } from "@/types/authType";
 import { TApiResponseMessage } from "@/types/projectType";
 import { isAxiosError } from "axios";
 
@@ -126,6 +126,20 @@ export const getProfile = async () => {
     }
 
     throw new Error('Error al intentar obtener perfil');
+  }
+};
+
+// Update profile
+export const updateProfile = async (formData: TUser) => {
+  try {
+    const { data } = await api.put<TApiResponseMessage>('/auth/update-profile', formData);
+    return data.message;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar actualizar perfil');
   }
 };
 

@@ -2,12 +2,16 @@ import { TProfile, TUser, userSchema } from "@/types/authType"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import ErrorMessage from "../ErrorMessage"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { updateProfile } from "@/services/authService"
+import { toast } from "react-toastify"
 
 type ProfileFormProps = {
   data: TProfile
 }
 
 const ProfileForm = ({ data }: ProfileFormProps) => {
+  const queryClient = useQueryClient();
 
   const { register, handleSubmit, formState: { errors } } = useForm<TUser>({
     resolver: zodResolver(userSchema),
@@ -17,9 +21,21 @@ const ProfileForm = ({ data }: ProfileFormProps) => {
     }
   });
 
-  const handleOnSubmit = handleSubmit((formData: TUser) => {
-    console.log(formData);
-  })
+  // Mutate to update profile
+  const { mutate } = useMutation({
+    mutationFn: updateProfile,
+    onError: (error) => {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    },
+    onSuccess: (message) => {
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
+      toast.success(message);
+    },
+  });
+
+  const handleOnSubmit = handleSubmit((formData: TUser) => mutate(formData));
 
   return (
     <form
