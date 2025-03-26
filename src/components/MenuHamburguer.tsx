@@ -3,7 +3,7 @@ import { TProfile } from '@/types/authType';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon } from '@heroicons/react/16/solid'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 type MenuHamburguerProps = {
@@ -45,9 +45,11 @@ const MenuHamburguer = ({ name }: MenuHamburguerProps) => {
           <p className='p-2 text-center text-sm/6'>Hola {name}</p>
 
           <MenuItem>
-            <button className="w-full text-start rounded-lg py-1.5 px-3 hover:bg-primaryHover/80 hover:text-white">
+            <Link
+              to='/profile'
+              className="w-full text-start rounded-lg py-1.5 px-3 hover:bg-primaryHover/80 hover:text-white">
               Mi Perfil
-            </button>
+            </Link>
           </MenuItem>
 
           <MenuItem>

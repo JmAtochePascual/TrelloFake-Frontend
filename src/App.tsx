@@ -12,6 +12,9 @@ import ConfirmAccountPage from './pages/auth/ConfirmAccountPage'
 import UpdatePasswordPage from './pages/auth/UpdatePasswordPage'
 import CreateAccount from './pages/auth/CreateAccount'
 import ProjectTeamPage from './pages/projects/ProjectTeamPage'
+import ProfilePage from './pages/profile/ProfilePage'
+import ChangePasswordPage from './pages/profile/ChangePasswordPage'
+import ProfileLayout from './layouts/ProfileLayout'
 
 function App() {
 
@@ -35,7 +38,13 @@ function App() {
           <Route path='/projects/:projectId' element={<ProjectDetailsPage />} />
           <Route path='/projects/:projectId/edit' element={<EditProjectPage />} />
           <Route path='/projects/:projectId/team' element={<ProjectTeamPage />} />
+
+          <Route element={<ProfileLayout />}>
+            <Route path='/profile' element={<ProfilePage />} />
+            <Route path='/profile/change-password' element={<ChangePasswordPage />} />
+          </Route>
         </Route>
+
       </Routes>
     </BrowserRouter>
   )
