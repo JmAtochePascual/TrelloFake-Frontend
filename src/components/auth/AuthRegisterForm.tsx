@@ -1,10 +1,10 @@
-import { TRegister } from "@/types/authType"
+import { TCreateAccount } from "@/types/authType"
 import ErrorMessage from "../ErrorMessage"
 import { FieldErrors, UseFormRegister } from "react-hook-form"
 
 type AuthRegisterFormProps = {
-  register: UseFormRegister<TRegister>
-  errors: FieldErrors<TRegister>
+  register: UseFormRegister<TCreateAccount>
+  errors: FieldErrors<TCreateAccount>
 }
 
 const AuthRegisterForm = ({ register, errors }: AuthRegisterFormProps) => {

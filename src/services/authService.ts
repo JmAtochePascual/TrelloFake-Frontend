@@ -1,5 +1,5 @@
 import api from "@/config/axios";
-import { TLogin, TCreateAccount, TResendToken, TConfirmAccount, TUpdatePassword, TForgotPassword, TVerifyToken, TProfile, TUser } from "@/types/authType";
+import { TLogin, TCreateAccount, TResendToken, TConfirmAccount, TUpdatePassword, TForgotPassword, TVerifyToken, TProfile, TUser, TPassword } from "@/types/authType";
 import { TApiResponseMessage } from "@/types/projectType";
 import { isAxiosError } from "axios";
 
@@ -143,3 +143,16 @@ export const updateProfile = async (formData: TUser) => {
   }
 };
 
+// Update password
+export const changePassword = async (formData: TPassword) => {
+  try {
+    const { data } = await api.post<TApiResponseMessage>('/auth/change-password', formData);
+    return data.message;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar actualizar contraseña');
+  }
+};

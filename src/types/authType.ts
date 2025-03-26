@@ -42,7 +42,16 @@ export const profileSchema = z.object({
 export const userSchema = z.object({
   name: z.string().min(1, { message: "Debes ingresar un nombre" }),
   email: z.string().email({ message: "Debes ingresar un correo electronico" }),
-})
+});
+
+export const passwordSchema = z.object({
+  currentPassword: z.string().min(8, { message: "Debes ingresar una contraseña valida" }),
+  password: z.string().min(8, { message: "Debes ingresar una contraseña valida" }),
+  confirmPassword: z.string().min(8, { message: "Debes ingresar una confirmacion de contraseña valida" }),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Las contraseñas no coinciden",
+  path: ["confirmPassword"],
+});
 
 export type TCreateAccount = z.infer<typeof createAccountSchema>;
 
@@ -61,6 +70,9 @@ export type TLogin = z.infer<typeof loginSchema>;
 export type TProfile = z.infer<typeof profileSchema>;
 
 export type TUser = z.infer<typeof userSchema>;
+
+export type TPassword = z.infer<typeof passwordSchema>;
+
 
 
 
