@@ -39,6 +39,11 @@ export const profileSchema = z.object({
   __v: z.number()
 });
 
+export const userSchema = z.object({
+  name: z.string().min(1, { message: "Debes ingresar un nombre" }),
+  email: z.string().email({ message: "Debes ingresar un correo electronico" }),
+})
+
 export type TCreateAccount = z.infer<typeof createAccountSchema>;
 
 export type TConfirmAccount = z.infer<typeof verifyTokenSchema>;
@@ -54,6 +59,8 @@ export type TUpdatePassword = z.infer<typeof updatePasswordSchema>;
 export type TLogin = z.infer<typeof loginSchema>;
 
 export type TProfile = z.infer<typeof profileSchema>;
+
+export type TUser = z.infer<typeof userSchema>;
 
 
 
