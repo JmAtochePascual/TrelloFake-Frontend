@@ -1,12 +1,9 @@
-import { deleteProject } from "@/services/projectService"
 import { TProfile } from "@/types/authType"
 import { TProject } from "@/types/projectType"
 import { isManager } from "@/utils/isManager"
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { Link } from "react-router-dom"
-import { toast } from "react-toastify"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 
 type ProjectCardProps = {
   project: TProject,
@@ -14,23 +11,8 @@ type ProjectCardProps = {
 }
 
 const ProjectCard = ({ project, user }: ProjectCardProps) => {
-  const queryClient = useQueryClient();
-
-  // Mutate to delete the project
-  const { mutate } = useMutation({
-    mutationFn: deleteProject,
-    onError: (error) => {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      }
-    },
-    onSuccess: (message) => {
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
-      toast.success(message);
-    },
-  });
-
-  const handleDelete = () => mutate(project._id);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   return (
     <li className="flex justify-between items-start px-4 py-8">
@@ -89,7 +71,7 @@ const ProjectCard = ({ project, user }: ProjectCardProps) => {
               <MenuItem>
                 <button
                   type="button"
-                  onClick={handleDelete}
+                  onClick={() => navigate(location.pathname + `?deleteProject=${project._id}`)}
                   className="w-full text-start text-red-500 rounded-lg py-1.5 px-3 hover:text-red-700">
                   Eliminar Proyecto
                 </button>

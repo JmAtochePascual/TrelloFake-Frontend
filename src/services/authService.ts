@@ -1,5 +1,17 @@
 import api from "@/config/axios";
-import { TLogin, TCreateAccount, TResendToken, TConfirmAccount, TUpdatePassword, TForgotPassword, TVerifyToken, TProfile, TUser, TPassword } from "@/types/authType";
+import {
+  TLogin,
+  TCreateAccount,
+  TResendToken,
+  TConfirmAccount,
+  TUpdatePassword,
+  TForgotPassword,
+  TVerifyToken,
+  TProfile,
+  TUser,
+  TPassword,
+  TCheckPassword
+} from "@/types/authType";
 import { TApiResponseMessage } from "@/types/projectType";
 import { isAxiosError } from "axios";
 
@@ -154,5 +166,19 @@ export const changePassword = async (formData: TPassword) => {
     }
 
     throw new Error('Error al intentar actualizar contraseña');
+  }
+};
+
+// Check password to delete project
+export const checkPasswordToDeleteProject = async (formData: TCheckPassword) => {
+  try {
+    const { data } = await api.post<TApiResponseMessage>(`/auth/check-password`, formData);
+    return data.message;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error('Error al intentar verificar contraseña');
   }
 };

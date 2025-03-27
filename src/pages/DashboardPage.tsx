@@ -1,3 +1,4 @@
+import DeleteProjectModal from "@/components/projects/DeleteProjectModal"
 import ProjectCard from "@/components/projects/ProjectCard"
 import useAuth from "@/hooks/useAuth"
 import { getProjects } from "@/services/projectService"
@@ -53,6 +54,8 @@ const DashboardPage = () => {
             }
           </ul>
       }
+
+      <DeleteProjectModal />
     </>
   )
 }

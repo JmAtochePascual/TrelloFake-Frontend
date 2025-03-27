@@ -53,6 +53,10 @@ export const passwordSchema = z.object({
   path: ["confirmPassword"],
 });
 
+export const checkPasswordSchema = z.object({
+  password: z.string().min(1, "La contraseña es requerida"),
+});
+
 export type TCreateAccount = z.infer<typeof createAccountSchema>;
 
 export type TConfirmAccount = z.infer<typeof verifyTokenSchema>;
@@ -73,6 +77,4 @@ export type TUser = z.infer<typeof userSchema>;
 
 export type TPassword = z.infer<typeof passwordSchema>;
 
-
-
-
+export type TCheckPassword = z.infer<typeof checkPasswordSchema>;
