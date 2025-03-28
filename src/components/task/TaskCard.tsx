@@ -3,6 +3,7 @@ import { TProjectTask } from "@/types/projectType"
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useDraggable } from "@dnd-kit/core"
 import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 
@@ -12,12 +13,15 @@ type TaskCardProps = {
 }
 
 const TaskCard = ({ task, canEdit }: TaskCardProps) => {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: task._id,
+  });
   const navigate = useNavigate();
   const params = useParams();
   const projectId = params.projectId!;
   const queryClient = useQueryClient();
 
-  // Mutate to delete a task
+  // Mutate to delete a task  
   const { mutate } = useMutation({
     mutationFn: deleteTask,
     onError: (error) => {
@@ -33,10 +37,21 @@ const TaskCard = ({ task, canEdit }: TaskCardProps) => {
 
   const onDelete = () => mutate({ projectId, taskId: task._id });
 
+  const style = transform
+    ? {
+      transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`
+    }
+    : undefined;
+
   return (
     <li className="p-4 flex justify-between items-start gap-3 border border-slate-200 bg-white">
 
-      <div className="flex flex-col gap-1">
+      <div
+        {...attributes}
+        {...listeners}
+        ref={setNodeRef}
+        style={style}
+        className="w-full flex flex-col gap-1">
         <button
           type="button"
           onClick={() => navigate('?taskDetails=' + task._id)}
