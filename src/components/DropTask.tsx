@@ -9,9 +9,14 @@ const DropTask = ({ status }: DropTaskProps) => {
     id: status
   });
 
+  const style = {
+    opacity: isOver ? "0.4" : "1"
+  };
+
   return (
     <div
       ref={setNodeRef}
+      style={style}
       className="mt-5 p-2 grid place-content-center text-sm font-semibold uppercase border border-dashed border-slate-500 text-slate-500">
       Soltar Tarea aquí
     </div>
