@@ -25,7 +25,7 @@ const ProjectDetailsPage = () => {
   const canEdit = useMemo(() => data?.manager === user?._id, [data, user]);
 
   if (isLoading && isLoadingUser) return <p>Cargando...</p>
-  if (isError) return <Navigate to="/" />
+  if (isError) return <Navigate to="/404" />
   if (data && user) return (
     <>
       <div className="mb-6 flex flex-col gap-1">

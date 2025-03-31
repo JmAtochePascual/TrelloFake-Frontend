@@ -15,6 +15,7 @@ import ProjectTeamPage from './pages/projects/ProjectTeamPage'
 import ProfilePage from './pages/profile/ProfilePage'
 import ChangePasswordPage from './pages/profile/ChangePasswordPage'
 import ProfileLayout from './layouts/ProfileLayout'
+import NotFound from './pages/404/NotFound'
 
 function App() {
 
@@ -43,6 +44,10 @@ function App() {
             <Route path='/profile' element={<ProfilePage />} />
             <Route path='/profile/change-password' element={<ChangePasswordPage />} />
           </Route>
+        </Route>
+
+        <Route element={<AuthLayout />} >
+          <Route path='*' element={<NotFound />} />
         </Route>
 
       </Routes>
