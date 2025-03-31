@@ -69,6 +69,7 @@ const TaskList = ({ tasks, canEdit }: TaskListProps) => {
       const status = over.id as TTask['status'];
       mutate({ projectId, taskId, status });
 
+      // Update the task list in the query cache
       queryClient.setQueryData(['project', projectId], (prevData: TProject) => {
         const updatedTasks = prevData.tasks.map((task) => {
           if (task._id === taskId) {

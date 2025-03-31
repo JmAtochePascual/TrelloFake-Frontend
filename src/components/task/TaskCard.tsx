@@ -35,7 +35,17 @@ const TaskCard = ({ task, canEdit }: TaskCardProps) => {
 
   const onDelete = () => mutate({ projectId, taskId: task._id });
 
-  const style = transform ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` } : undefined;
+  const style = transform ? {
+    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+    padding: "1.5rem",
+    background: "#fff",
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "start",
+    gap: "3",
+    borderWidth: "1px",
+  } : undefined;
 
   return (
     <li className="p-4 flex justify-between items-start gap-3 border border-slate-200 bg-white">
@@ -46,12 +56,9 @@ const TaskCard = ({ task, canEdit }: TaskCardProps) => {
         ref={setNodeRef}
         style={style}
         className="w-full flex flex-col gap-1">
-        <button
-          type="button"
-          onClick={() => navigate('?taskDetails=' + task._id)}
-          className="font-bold text-start">
+        <p className="font-bold text-start">
           {task.name}
-        </button>
+        </p>
 
         <p className="text-sm text-gray-500">{task.description}</p>
       </div>
@@ -97,8 +104,6 @@ const TaskCard = ({ task, canEdit }: TaskCardProps) => {
               </MenuItem>
             </>
           }
-
-          <div className="my-1 h-px bg-white/5" />
         </MenuItems>
       </Menu>
     </li>
