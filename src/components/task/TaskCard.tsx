@@ -13,9 +13,7 @@ type TaskCardProps = {
 }
 
 const TaskCard = ({ task, canEdit }: TaskCardProps) => {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: task._id,
-  });
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: task._id });
   const navigate = useNavigate();
   const params = useParams();
   const projectId = params.projectId!;
@@ -37,11 +35,7 @@ const TaskCard = ({ task, canEdit }: TaskCardProps) => {
 
   const onDelete = () => mutate({ projectId, taskId: task._id });
 
-  const style = transform
-    ? {
-      transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`
-    }
-    : undefined;
+  const style = transform ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` } : undefined;
 
   return (
     <li className="p-4 flex justify-between items-start gap-3 border border-slate-200 bg-white">

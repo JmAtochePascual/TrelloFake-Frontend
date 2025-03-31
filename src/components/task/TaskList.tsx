@@ -8,6 +8,7 @@ import { updateTaskStatus } from "@/services/taskService"
 import { toast } from "react-toastify"
 import { useParams } from "react-router-dom"
 import { TTask } from "@/types/taskType"
+import { TProject } from '../../types/projectType';
 
 type TaskListProps = {
   tasks: TProjectTasks,
@@ -55,7 +56,6 @@ const TaskList = ({ tasks, canEdit }: TaskListProps) => {
     },
     onSuccess: (message) => {
       queryClient.invalidateQueries({ queryKey: ['project', projectId] });
-      // queryClient.invalidateQueries({ queryKey: ['task', taskId] });
       toast.success(message);
     },
   });
@@ -64,11 +64,21 @@ const TaskList = ({ tasks, canEdit }: TaskListProps) => {
     const { active, over } = event;
 
     // Check if the task is dropped over a valid drop zone (not null)
-    if (over && active.id) {
+    if (over && over.id) {
       const taskId = active.id.toString();
       const status = over.id as TTask['status'];
-
       mutate({ projectId, taskId, status });
+
+      queryClient.setQueryData(['project', projectId], (prevData: TProject) => {
+        const updatedTasks = prevData.tasks.map((task) => {
+          if (task._id === taskId) {
+            return { ...task, status };
+          };
+          return task;
+        });
+
+        return { ...prevData, tasks: updatedTasks };
+      });
     };
   };
 
@@ -102,7 +112,8 @@ const TaskList = ({ tasks, canEdit }: TaskListProps) => {
                           key={task._id}
                           task={task}
                           canEdit={canEdit}
-                        />)
+                        />
+                      )
                   }
                 </ul>
               </div>

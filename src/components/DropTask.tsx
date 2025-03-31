@@ -5,9 +5,7 @@ type DropTaskProps = {
 }
 
 const DropTask = ({ status }: DropTaskProps) => {
-  const { isOver, setNodeRef } = useDroppable({
-    id: status
-  });
+  const { isOver, setNodeRef } = useDroppable({ id: status });
 
   const style = {
     opacity: isOver ? "0.4" : "1"
